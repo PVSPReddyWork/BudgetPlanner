@@ -1,0 +1,69 @@
+{
+    "dataItems": [
+        {
+          "id": 1,
+          "name": "1",
+          "colorTag": "#FFF"
+        },
+        {
+          "id": 2,
+          "name": "2",
+          "colorTag": "#9400D3"
+        },
+        {
+          "id": 3,
+          "name": "3",
+          "colorTag": "#4B0082"
+        },
+        {
+          "id": 4,
+          "name": "4",
+          "colorTag": "#0000FF"
+        },
+        {
+          "id": 5,
+          "name": "5",
+          "colorTag": "#00FF00"
+        },
+        {
+          "id": 6,
+          "name": "6",
+          "colorTag": "#FFFF00"
+        },
+        {
+          "id": 7,
+          "name": "7",
+          "colorTag": "#FF7F00"
+        },
+        {
+          "id": 8,
+          "name": "8",
+          "colorTag": "#FF0000"
+        },
+        {
+          "id": 9,
+          "name": "9",
+          "colorTag": "#008080"
+        },
+        {
+          "id": 10,
+          "name": "*",
+          "colorTag": "#FBCBC9"
+        },
+        {
+          "id": 0,
+          "name": "0",
+          "colorTag": "#000"
+        },
+        {
+          "id": 11,
+          "name": "#",
+          "colorTag": "#6B7B8C"
+        },
+        {
+          "id": 12,
+          "name": "Done",
+          "colorTag": "#FFFFFF"
+        }
+    ]
+}
