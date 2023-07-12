@@ -1,11 +1,15 @@
 import React from 'react';
 import './style.css';
-import Navigation from './Views/NavigationPage/NavigationPage.js';
+import CustomNavigation from './NavigationPage/NavigationPage.js';
+import ErrorBoundary from './ErrorDisplayHandler/ErrorBoundaryPage.js';
 
 export default function App() {
   return (
     <div>
-      <Navigation />
+      <ErrorBoundary fallback={<p>Something went wrong</p>}>
+        <CustomNavigation />
+        <h1>Hello World</h1>
+      </ErrorBoundary>
     </div>
   );
 }

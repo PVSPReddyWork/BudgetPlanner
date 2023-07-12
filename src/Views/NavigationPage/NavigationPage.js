@@ -20,14 +20,17 @@ import LoginPage from './../Login/LoginPage';
 // making sure things like the back button and bookmarks
 // work properly.
 
-const Navigation = (parms) => {
+const CustomNavigation = (parms) => {
   const Router = BrowserRouter;
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<IntroPage />} />
-          <Route path="login" element={<LoginPage />} />
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          {/* <Route index element={<IntroPage />} />
+          <Route path="login" element={<LoginPage />} /> */}
           {/* <Route path="boardlogin" element={<LoginToBoardPage />} /> */}
           {/* <Route path="help" element={<HelpPage />} /> */}
           {/* <Route path="dashboard" element={<Dashboard />} /> */}
@@ -114,4 +117,4 @@ const NoPage = () => {
   return <h1>404</h1>;
 };
 
-export default Navigation;
+export default CustomNavigation;
