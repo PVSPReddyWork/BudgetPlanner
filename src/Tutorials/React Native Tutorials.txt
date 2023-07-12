@@ -1,0 +1,2 @@
+set array check in "App.js" file as
+  Array.prototype.isArray = true;

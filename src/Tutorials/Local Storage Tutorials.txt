@@ -1,0 +1,35 @@
+react-native-fs
+---------------
+Rules:
+------
+MainBundlePath: absolute path of Main Bundle Directory. (not available on Android)
+CachesDirectoryPath: absolute paht of Cache Directory.
+ExternalCachesDirectoryPath: absolute path of External Cache Directory. (not available on iOS)
+DocumentDirectoryPath: absolute path of Document Directory.
+TemporaryDirectoryPath: absolute path of Temporary Directory. (same with Cache Directory on Android)
+LibraryDirectoryPath: absolute path of iOS NSLibraryDirectory. (not available on Android)
+ExternalDirectoryPath: absolute path of External files, shared directory. (not available on iOS)
+ExternalStorageDirectoryPath: absolute path of External storage, shared directory. (not available on iOS)
+
+
+For Accessing Local Storage
+npm install react-native-fs
+
+
+For Android
+-----------
+AndroidManifest.xml
+------------
+<manifest ...>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application
+      android:requestLegacyExternalStorage="true"
+      ...>
+      ...
+    </application>
+</manifest>
+
+
+
+
