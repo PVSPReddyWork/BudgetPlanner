@@ -1,0 +1,29 @@
+<body>
+  <!--onload="onLoadBody(); return null;"-->
+  <div id="header"></div>
+  <div id="divBody">
+    <div id="divDataInput">
+      <!-- <div>
+          <input type="text" id="localImagesFolderPath" />
+        </div> -->
+      <input
+        type="file"
+        id="imageUpload"
+        accept="image/png, image/gif, image/jpeg"
+      />
+      <!-- <input type="file" id="selectFolderForFiles" /> -->
+      <!-- <button onclick="OpenFoldersWithPHP(); return;">Get PHP Data</button> -->
+      <!--<input type="file" onchange="onUploadInputChangedEvent(this); return null;" id="imageUpload" accept="image/png, image/gif, image/jpeg">-->
+    </div>
+    <div id="divDataOutput">
+      <div id="divDataOutputDisplay">
+        <!--<img id="imageInputDisplay" />-->
+        <!--<canvas id="imageInputDisplay" />-->
+      </div>
+      <div id="divDataReferencesDisplay"></div>
+    </div>
+  </div>
+  <div id="divPopup">
+    <h1 id="textLoadingPopup">Loading</h1>
+  </div>
+</body>
