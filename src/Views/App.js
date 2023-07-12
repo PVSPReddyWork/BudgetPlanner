@@ -8,7 +8,6 @@ export default function App() {
     <div>
       <ErrorBoundary fallback={<p>Something went wrong</p>}>
         <CustomNavigation />
-        <h1>Hello World</h1>
       </ErrorBoundary>
     </div>
   );

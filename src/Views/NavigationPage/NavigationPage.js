@@ -10,6 +10,7 @@ import {
 import './NavigationPageStyles.css';
 import IntroPage from './../Intro/IntroPage';
 import LoginPage from './../Login/LoginPage';
+import ViewExpensePage from './../Expenses/ViewExpenses/ViewExpensesPage';
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -28,7 +29,8 @@ const CustomNavigation = (parms) => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="view_expense" element={<ViewExpensePage />} />
           {/* <Route index element={<IntroPage />} />
           <Route path="login" element={<LoginPage />} /> */}
           {/* <Route path="boardlogin" element={<LoginToBoardPage />} /> */}
@@ -54,6 +56,9 @@ const Layout = () => {
           </Link>
           <Link to="/login" className="headerLink">
             <div className="menuOptions">Login</div>
+          </Link>
+          <Link to="/view_expense" className="headerLink">
+            <div className="menuOptions">Expenses</div>
           </Link>
           {/* <Link to="/boardlogin" className="headerLink">
             <div className="menuOptions">Select Board</div>
