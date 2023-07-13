@@ -1,10 +1,11 @@
 import { CustomLogger } from './../../Modules/Helper';
-import {
-  mainURL,
-  PostGetAvailableMonthlyExpenseData,
-  SUCCESS_STATUS_CODE,
-} from './../URLConstants';
+// import {
+//   mainURL,
+//   PostGetAvailableMonthlyExpenseData,
+//   SUCCESS_STATUS_CODE,
+// } from './../URLConstants';
 
+const SUCCESS_STATUS_CODE = 200;
 export const ViewExpensesService = {
   getExpenses: async (
     params,
