@@ -1,6 +1,0 @@
-cd /Users/venkatasivaprasadreddypulagam/Documents/SupportFiles/Android/sdk/platform-tools
-./adb reverse tcp:8081 tcp:8081
-
-
-react-native start
-react-native run-android
