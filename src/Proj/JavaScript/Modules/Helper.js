@@ -6,10 +6,10 @@ Client error responses (400 – 499)
 Server error responses (500 – 599)
 */
 
-const CreateResponseObject = {
-  CodeSuccess: 200,
-  CodeClientError: 400,
-  CodeServerError: 500,
+export const CodeSuccess= 200;
+export const CodeClientError= 400;
+export const CodeServerError= 500;
+export const CreateResponseObject = {
   createResponseObject: async (statusCode = 0, responseData, message = '') => {
     let responseObject;
     try {
@@ -21,7 +21,7 @@ const CreateResponseObject = {
       return responseObject;
     } catch (ex) {
       responseObject = {
-        statusCode: Helper.CodeServerError,
+        statusCode: CodeServerError,
         data: null,
         message:
           'Failed to create a JSON response object, please wait for sometime to fix the issue',
@@ -64,6 +64,82 @@ export const CustomLogger = {
   },
 };
 
+
+  
+export const MonthsObject= [
+  {
+    id: 1,
+    name: 'January',
+    code: 'Jan',
+    monthNumber: '01',
+  },
+  {
+    id: 2,
+    name: 'Feburary',
+    code: 'Feb',
+    monthNumber: '02',
+  },
+  {
+    id: 3,
+    name: 'March',
+    code: 'Mar',
+    monthNumber: '03',
+  },
+  {
+    id: 4,
+    name: 'April',
+    code: 'Apr',
+    monthNumber: '04',
+  },
+  {
+    id: 5,
+    name: 'May',
+    code: 'May',
+    monthNumber: '05',
+  },
+  {
+    id: 6,
+    name: 'June',
+    code: 'Jun',
+    monthNumber: '06',
+  },
+  {
+    id: 7,
+    name: 'July',
+    code: 'Jul',
+    monthNumber: '07',
+  },
+  {
+    id: 8,
+    name: 'August',
+    code: 'Aug',
+    monthNumber: '08',
+  },
+  {
+    id: 9,
+    name: 'September',
+    code: 'Sep',
+    monthNumber: '09',
+  },
+  {
+    id: 10,
+    name: 'October',
+    code: 'Oct',
+    monthNumber: '10',
+  },
+  {
+    id: 11,
+    name: 'November',
+    code: 'Nov',
+    monthNumber: '11',
+  },
+  {
+    id: 12,
+    name: 'December',
+    code: 'Dec',
+    monthNumber: '12',
+  },
+];
 export const DateTimeManipulations = {
   getDay: function (date = new Date()) {
     const currentDayDate = date.getDate();
@@ -72,7 +148,7 @@ export const DateTimeManipulations = {
   getMonth: function (date = new Date()) {
     const currentMonthNumber = date.getMonth() + 1;
     let currentMonthObject = {};
-    monthsObject.forEach((monthItem) => {
+    MonthsObject.forEach((monthItem) => {
       if (currentMonthNumber.toString() === monthItem.id.toString()) {
         currentMonthObject = monthItem;
       }
@@ -156,80 +232,6 @@ export const DateTimeManipulations = {
     var age = Math.abs(year - 1970);
     return age;
   },
-  monthsObject: [
-    {
-      id: 1,
-      name: 'January',
-      code: 'Jan',
-      monthNumber: '01',
-    },
-    {
-      id: 2,
-      name: 'Feburary',
-      code: 'Feb',
-      monthNumber: '02',
-    },
-    {
-      id: 3,
-      name: 'March',
-      code: 'Mar',
-      monthNumber: '03',
-    },
-    {
-      id: 4,
-      name: 'April',
-      code: 'Apr',
-      monthNumber: '04',
-    },
-    {
-      id: 5,
-      name: 'May',
-      code: 'May',
-      monthNumber: '05',
-    },
-    {
-      id: 6,
-      name: 'June',
-      code: 'Jun',
-      monthNumber: '06',
-    },
-    {
-      id: 7,
-      name: 'July',
-      code: 'Jul',
-      monthNumber: '07',
-    },
-    {
-      id: 8,
-      name: 'August',
-      code: 'Aug',
-      monthNumber: '08',
-    },
-    {
-      id: 9,
-      name: 'September',
-      code: 'Sep',
-      monthNumber: '09',
-    },
-    {
-      id: 10,
-      name: 'October',
-      code: 'Oct',
-      monthNumber: '10',
-    },
-    {
-      id: 11,
-      name: 'November',
-      code: 'Nov',
-      monthNumber: '11',
-    },
-    {
-      id: 12,
-      name: 'December',
-      code: 'Dec',
-      monthNumber: '12',
-    },
-  ],
 };
 
-module.exports = { CreateResponseObject, CustomLogger, DateTimeManipulations };
+//module.exports = { CreateResponseObject, CustomLogger, DateTimeManipulations, MonthsObject, CodeSuccess, CodeClientError, CodeServerError };

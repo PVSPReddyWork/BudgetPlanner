@@ -15,7 +15,7 @@ const ViewExpenses_Page = (parms) => {
       };
       (async () => {
         const reqObj = await ViewExpensesService.getExpenses(timeObj);
-        setExpensesData({ ...expensesData, expenses: reqObj });
+        //setExpensesData({ ...expensesData, expenses: reqObj });
       })();
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);

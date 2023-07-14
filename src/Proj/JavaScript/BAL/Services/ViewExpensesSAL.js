@@ -5,7 +5,7 @@ import { CustomLogger } from './../../Modules/Helper';
 //   SUCCESS_STATUS_CODE,
 // } from './../URLConstants';
 
-const SUCCESS_STATUS_CODE = 200;
+export const SUCCESS_STATUS_CODE = 200;
 export const ViewExpensesService = {
   getExpenses: async (
     params,
@@ -53,7 +53,7 @@ export const ViewExpensesService = {
         .then((responseJSON) => {
           console.log(responseJSON);
           if (responseJSON.status_code === SUCCESS_STATUS_CODE) {
-            _expensesRequestParms = {
+            const _expensesRequestParms = {
               data: responseJSON.response_data,
             };
             if (successCallBack !== null && successCallBack !== undefined) {
@@ -61,7 +61,7 @@ export const ViewExpensesService = {
             }
           }
         })
-        .catch((error) => {
+        .catch((ex) => {
           CustomLogger.ErrorLogger(ex);
           if (failureCallBack !== null && failureCallBack !== undefined) {
             failureCallBack(ex);
@@ -76,4 +76,4 @@ export const ViewExpensesService = {
   },
 };
 
-module.exports = { ViewExpensesService };
+//module.exports = { ViewExpensesService };
