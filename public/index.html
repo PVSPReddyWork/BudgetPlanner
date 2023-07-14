@@ -1,1 +1,38 @@
-<div id="root"></div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <script defer src="./indexTest.js"></script> -->
+    <link href="./index.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <title>Budget Planner</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js';
+    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js';
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: 'AIzaSyD7Mhr9ceLYP-ZVfkqt5z_8LJm-iUqMIm8',
+      authDomain: 'budgetplanner-2020.firebaseapp.com',
+      projectId: 'budgetplanner-2020',
+      storageBucket: 'budgetplanner-2020.appspot.com',
+      messagingSenderId: '797542597777',
+      appId: '1:797542597777:web:dfa83cf3c5310fc70b2b30',
+      measurementId: 'G-X0075SEZBM',
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+</html>
