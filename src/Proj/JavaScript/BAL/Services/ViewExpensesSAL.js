@@ -1,11 +1,47 @@
 import { CustomLogger } from './../../Modules/Helper';
-// import {
-//   mainURL,
-//   PostGetAvailableMonthlyExpenseData,
-//   SUCCESS_STATUS_CODE,
-// } from './../URLConstants';
+import {
+  mainURL, testURL,
+  PostGetAvailableMonthlyExpenseData,
+  SUCCESS_STATUS_CODE,
+} from './../URLConstants';
+import { PostData, PostforGetData } from '../HTTPRequestByFetch';
 
-export const SUCCESS_STATUS_CODE = 200;
+export const ExpensesService = {
+  getExpenses: async (
+    params,
+    successCallBack = null,
+    failureCallBack = null
+  ) => {
+    try {
+      const url = `${mainURL}${PostGetAvailableMonthlyExpenseData}`;//
+      //const url ='https://reqres.in/api/users?page=2';//`${mainURL}${PostGetAvailableMonthlyExpenseData}`;//"https://freepass.cyclic.app/test";//`https://freepass.cyclic.app/proxy?url${mainURL}${PostGetAvailableMonthlyExpenseData}`;
+      const postDataReqObj = {
+          method_name: 'getDatabyMonth',
+          user_request: 'getDatabyMonth',
+          service_request_data: {
+            month: "July",//params.sheetName,
+            year: "2023"//params.year,
+        }
+      };
+      const response = await PostData(url,  postDataReqObj);
+      //console.log(response);
+      /*
+      if(response.ok){
+        const responseJSONObj = await response.text();
+        console.log(responseJSONObj);
+      }
+      */
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+      if (failureCallBack !== null && failureCallBack !== undefined) {
+        failureCallBack(ex);
+      }
+    }
+  },
+};
+
+
+
 export const ViewExpensesService = {
   getExpenses: async (
     params,
@@ -13,16 +49,17 @@ export const ViewExpensesService = {
     failureCallBack = null
   ) => {
     try {
-      const _testURL = 'https://reqres.in/api/users?page=2';
-      const testURL = `https://tiny-pink-jay-veil.cyclic.app/proxy/?url=${_testURL}`; //mainURL + PostGetAvailableMonthlyExpenseData;
-      const url = testURL; // mainURL + PostGetAvailableMonthlyExpenseData;
+      const _testURL = 'https://freepass.cyclic.app/test';//'https://reqres.in/api/users?page=2';
+      //const testURL = `https://tiny-pink-jay-veil.cyclic.app/proxy/?url=${_testURL}`; //mainURL + PostGetAvailableMonthlyExpenseData;
+      const proxy = "https://freepass.cyclic.app/proxy/?url=";//"http://localhost:3010/proxy/?url=";//https://freepass.cyclic.app/proxy/?url=
+      const url = `${proxy}${_testURL}`;//`${proxy}${mainURL}${PostGetAvailableMonthlyExpenseData}`;//"https://freepass.cyclic.app/test";//`https://freepass.cyclic.app/proxy?url${mainURL}${PostGetAvailableMonthlyExpenseData}`;
       const postData = {
-        method: 'POST',
+        method: 'GET',
         body: {
           method_name: 'getDatabyMonth',
           service_request_data: {
-            month: params.sheetName,
-            year: params.year,
+            month: "July",//params.sheetName,
+            year: "2023"//params.year,
           },
         },
         headers: {
@@ -37,15 +74,18 @@ export const ViewExpensesService = {
       fetch(url, {
         method: 'POST',
         headers: {
+          ...postData.headers,
           /*
           Accept: '* /*',
           'Access-Control-Allow-Origin': '*',
           'Accept-Encoding': ['gzip', 'deflate', 'br'],
           Connection: 'keep-alive',
-          */
+          * /
           'Content-Type': 'application/json',
+          */
         },
         body: JSON.stringify(postData),
+        //body: JSON.stringify(postData.body),
       })
         .then((response) => {
           return response.json();

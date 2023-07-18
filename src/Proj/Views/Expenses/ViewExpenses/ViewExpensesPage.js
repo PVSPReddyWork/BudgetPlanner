@@ -3,7 +3,7 @@ import {
   CustomLogger,
   DateTimeManipulations,
 } from './../../../JavaScript/Modules/Helper.js';
-import { ViewExpensesService } from './../../../JavaScript/BAL/Services/ViewExpensesSAL.js';
+import { ExpensesService, ViewExpensesService } from './../../../JavaScript/BAL/Services/ViewExpensesSAL.js';
 
 const ViewExpenses_Page = (parms) => {
   const [expensesData, setExpensesData] = useState({ expenses: [] });
@@ -14,7 +14,7 @@ const ViewExpenses_Page = (parms) => {
         month: DateTimeManipulations.getMonth,
       };
       (async () => {
-        const reqObj = await ViewExpensesService.getExpenses(timeObj);
+        await ExpensesService.getExpenses(timeObj);
         //setExpensesData({ ...expensesData, expenses: reqObj });
       })();
     } catch (ex) {
