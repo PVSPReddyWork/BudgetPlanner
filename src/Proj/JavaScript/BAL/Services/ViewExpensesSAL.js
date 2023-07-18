@@ -4,7 +4,7 @@ import {
   PostGetAvailableMonthlyExpenseData,
   SUCCESS_STATUS_CODE,
 } from './../URLConstants';
-import { PostData, PostforGetData } from '../HTTPRequestByFetch';
+import { PostData, PostDataDemo, PostforGetData } from '../HTTPRequestByFetch';
 
 export const ExpensesService = {
   getExpenses: async (
@@ -14,23 +14,32 @@ export const ExpensesService = {
   ) => {
     try {
       const url = `${mainURL}${PostGetAvailableMonthlyExpenseData}`;//
-      //const url ='https://reqres.in/api/users?page=2';//`${mainURL}${PostGetAvailableMonthlyExpenseData}`;//"https://freepass.cyclic.app/test";//`https://freepass.cyclic.app/proxy?url${mainURL}${PostGetAvailableMonthlyExpenseData}`;
       const postDataReqObj = {
           method_name: 'getDatabyMonth',
           user_request: 'getDatabyMonth',
           service_request_data: {
-            month: "July",//params.sheetName,
-            year: "2023"//params.year,
+            month: params.month,
+            year: params.year,
         }
       };
-      const response = await PostData(url,  postDataReqObj);
-      //console.log(response);
+      /*
+      //console.log(params.month);
+      //console.log(params.year);
+      //console.log(JSON.parse(JSON.stringify(params)));
+      */
+
+      const response = await PostDataDemo(url,  postDataReqObj);
+      
+      //return JSON.parse(response);
       /*
       if(response.ok){
         const responseJSONObj = await response.text();
         console.log(responseJSONObj);
       }
       */
+     if(successCallBack !== null && successCallBack !== undefined){
+      successCallBack(JSON.parse(response));
+     }
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
       if (failureCallBack !== null && failureCallBack !== undefined) {
