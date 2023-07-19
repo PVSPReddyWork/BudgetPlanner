@@ -163,147 +163,196 @@ const GoogleSheetAccess = {
     return responseData;
   },
 
-  DefaultSample: () => {},
-};
+  /**
+   * To add values in a cell in a sheet in existing google sheet file, required sheet file id and sheet name( = 'Sheet1') to be created
+   * @param {string} sheetFileID
+   * @param {string} inSheetName
+   * @param {int} row
+   * @param {int} column
+   * @param {string} value
+   * @returns {boolean}
+   */
+  PutValueInACell: (sheetFileID, inSheetName, row, column, value) => {
+    var isInserted = false;
+    try {
+      var currentSheet = SpreadsheetApp.openById(sheetFileID);
+      var sheet = currentSheet.getSheetByName(inSheetName);
+      //sheet.getRange(row, column, row + 1, column + 1).setValue(value);
+      sheet.getRange(row + 1, column + 1).setValue(value);
+      isInserted = true;
+    } catch (e) {
+      Logger.log(e);
+    }
+    return isInserted;
+  },
 
-function GetSheetDBDataJSON(
-  sheetId,
-  sheetName,
-  availableKeyValues = initValues
-) {
-  var sheetData = '';
-  try {
-    var currentSheet = SpreadsheetApp.openById(sheetId);
-    var sheet = currentSheet.getSheetByName(sheetName);
+  /**
+   * To delete an entire row in a sheet in existing google sheet file, required sheet file id and sheet name( = 'Sheet1') to be created
+   * @param {string} sheetFileID
+   * @param {string} inSheetName
+   * @param {int} row
+   * @returns {object}
+   */
+  DeleteARow: (sheetFileID, inSheetName, row) => {
+    var responseObject = {
+      status: 000,
+      data: {},
+    };
+    try {
+      var currentSheet = SpreadsheetApp.openById(sheetFileID);
+      var sheet = currentSheet.getSheetByName(inSheetName);
+      var valueToDelete = sheet.getSheetValues(
+        row + 1,
+        1,
+        1,
+        sheet.getLastColumn()
+      );
+      var _sheetValuesList = sheet.deleteRow(row + 1);
+      responseObject.status = 200;
+      responseObject.data = valueToDelete;
+    } catch (e) {
+      responseObject.status = 400;
+      responseObject.data = e;
+      Logger.log(e);
+    }
+    response = JSON.stringify(responseObject);
+    return response;
+  },
 
-    var _sheetKeysList = sheet.getSheetValues(1, 1, 1, sheet.getLastColumn());
-    var sheetKeysList = [];
+  /**
+   * To delete an entire column in a sheet in existing google sheet file, required sheet file id and sheet name( = 'Sheet1') to be created
+   * @param {string} sheetFileID
+   * @param {string} inSheetName
+   * @param {int} column
+   * @returns {object}
+   */
+  DeleteAColumn: (sheetFileID, inSheetName, column) => {
+    var responseObject = {
+      status: 000,
+      data: {},
+    };
+    try {
+      var currentSheet = SpreadsheetApp.openById(sheetFileID);
+      var sheet = currentSheet.getSheetByName(inSheetName);
+      var _sheetValuesList = sheet.deleteColumn(column + 1);
+      var valueToDelete = sheet.getSheetValues(
+        1,
+        column + 1,
+        sheet.getLastRow(),
+        1
+      );
+      responseObject.status = 200;
+      responseObject.data = valueToDelete;
+    } catch (e) {
+      responseObject.status = 400;
+      responseObject.data = e;
+      Logger.log(e);
+    }
+    response = JSON.stringify(responseObject);
+    return response;
+  },
 
-    if (_sheetKeysList.length > 0) {
-      for (var keys in _sheetKeysList[0]) {
-        for (var _initialKey in availableKeyValues) {
-          const initialKey = availableKeyValues[_initialKey];
-          if (initialKey.keyValue === _sheetKeysList[0][keys]) {
+  /**
+   * To get values in a sheet in existing google sheet file in json format with key and values merged, required sheet file id and sheet name( = 'Sheet1') to be created
+   * @param {string} sheetFileID
+   * @param {string} inSheetName
+   * @param {string} availableKeyValues
+   * @returns {object}
+   */
+  GetDataFromSheetAsJSON: (
+    sheetFileID,
+    inSheetName,
+    availableKeyValues = []
+  ) => {
+    var sheetData = '';
+    try {
+      var currentSheet = SpreadsheetApp.openById(sheetId);
+      var sheet = currentSheet.getSheetByName(sheetName);
+
+      var _sheetKeysList = sheet.getSheetValues(1, 1, 1, sheet.getLastColumn());
+      var sheetKeysList = [];
+
+      if (_sheetKeysList.length > 0) {
+        if (
+          availableKeyValues !== null &&
+          availableKeyValues !== undefined &&
+          availableKeyValues.length > 0
+        ) {
+          for (var keys in _sheetKeysList[0]) {
+            for (var _initialKey in availableKeyValues) {
+              const initialKey = availableKeyValues[_initialKey];
+              if (initialKey.keyValue === _sheetKeysList[0][keys]) {
+                const keyData = {
+                  keyIndex: keys,
+                  keyValue: initialKey.keyName,
+                };
+                sheetKeysList.push(keyData);
+              }
+            }
+          }
+        } else {
+          for (var keys in _sheetKeysList[0]) {
             const keyData = {
               keyIndex: keys,
-              keyValue: initialKey.keyName,
+              keyValue: _sheetKeysList[0][keys],
             };
             sheetKeysList.push(keyData);
           }
         }
+      } else {
       }
-    }
-    // console.log('AccessGSheet.gs >>>> GetSheetDBDataJSON >>>> sheetKeysList: ', sheetKeysList);
 
-    var _sheetValuesList = sheet.getSheetValues(
-      2,
-      1,
-      sheet.getLastRow() - 1,
-      sheet.getLastColumn() - 1
-    );
-    if (_sheetValuesList.length > 0) {
-      var eachItemArray = [];
-      for (var _sheetValuesListEachRow in _sheetValuesList) {
-        let _eachItem = '{';
-        const sheetValuesListEachRow =
-          _sheetValuesList[_sheetValuesListEachRow];
-        for (var _sheetValuesListEachRowItem in sheetValuesListEachRow) {
-          var sheetValuesListEachRowItem =
-            sheetValuesListEachRow[_sheetValuesListEachRowItem];
-          for (var _keyItem in sheetKeysList) {
-            const keyItem = sheetKeysList[_keyItem];
-            const currentIndex = keyItem.keyIndex;
-            if (currentIndex === _sheetValuesListEachRowItem) {
-              _eachItem +=
-                '"' +
-                keyItem.keyValue +
-                '"' +
-                ':' +
-                '"' +
-                sheetValuesListEachRowItem +
-                '"' +
-                ',';
+      // console.log('AccessGSheet.gs >>>> GetSheetDBDataJSON >>>> sheetKeysList: ', sheetKeysList);
+
+      var _sheetValuesList = sheet.getSheetValues(
+        2,
+        1,
+        sheet.getLastRow() - 1,
+        sheet.getLastColumn() - 1
+      );
+      if (_sheetValuesList.length > 0) {
+        var eachItemArray = [];
+        for (var _sheetValuesListEachRow in _sheetValuesList) {
+          let _eachItem = '{';
+          const sheetValuesListEachRow =
+            _sheetValuesList[_sheetValuesListEachRow];
+          for (var _sheetValuesListEachRowItem in sheetValuesListEachRow) {
+            var sheetValuesListEachRowItem =
+              sheetValuesListEachRow[_sheetValuesListEachRowItem];
+            for (var _keyItem in sheetKeysList) {
+              const keyItem = sheetKeysList[_keyItem];
+              const currentIndex = keyItem.keyIndex;
+              if (currentIndex === _sheetValuesListEachRowItem) {
+                _eachItem +=
+                  '"' +
+                  keyItem.keyValue +
+                  '"' +
+                  ':' +
+                  '"' +
+                  sheetValuesListEachRowItem +
+                  '"' +
+                  ',';
+              }
             }
           }
+          if (_eachItem !== '{') {
+            let eachItem = _eachItem.slice(0, -1);
+            eachItem += '}';
+            //eachItemArray.push(JSON.parse(eachItem));
+            eachItemArray.push(JSON.parse(eachItem));
+            sheetData = eachItemArray;
+          }
         }
-        if (_eachItem !== '{') {
-          let eachItem = _eachItem.slice(0, -1);
-          eachItem += '}';
-          //eachItemArray.push(JSON.parse(eachItem));
-          eachItemArray.push(JSON.parse(eachItem));
-          sheetData = eachItemArray;
-        }
+        // console.log('AccessGSheet.gs >>>> GetSheetDBDataJSON >>>> ', sheetData);
       }
-      // console.log('AccessGSheet.gs >>>> GetSheetDBDataJSON >>>> ', sheetData);
+    } catch (e) {
+      logError('AccessGSheet.gs >>>> GetSheetDBDataJSON', e);
     }
-  } catch (e) {
-    logError('AccessGSheet.gs >>>> GetSheetDBDataJSON', e);
-  }
-  return sheetData;
-}
+    return sheetData;
+  },
 
-function PutItemInSheetWithPosition(sheetId, sheetName, row, column, value) {
-  try {
-    var currentSheet = SpreadsheetApp.openById(sheetId);
-    var sheet = currentSheet.getSheetByName(sheetName);
-    //sheet.getRange(row, column, row + 1, column + 1).setValue(value);
-    sheet.getRange(row + 1, column + 1).setValue(value);
-  } catch (e) {
-    Logger.log(e);
-  }
-}
-
-function DeleteRow(sheetId, sheetName, row) {
-  var responseObject = {
-    status: 000,
-    data: {},
-  };
-  try {
-    var currentSheet = SpreadsheetApp.openById(sheetId);
-    var sheet = currentSheet.getSheetByName(sheetName);
-    var valueToDelete = sheet.getSheetValues(
-      row + 1,
-      1,
-      1,
-      sheet.getLastColumn()
-    );
-    var _sheetValuesList = sheet.deleteRow(row + 1);
-    responseObject.status = 200;
-    responseObject.data = valueToDelete;
-  } catch (e) {
-    responseObject.status = 400;
-    responseObject.data = e;
-    Logger.log(e);
-  }
-  response = JSON.stringify(responseObject);
-  return response;
-}
-
-function DeleteColumn(sheetId, sheetName, column) {
-  var responseObject = {
-    status: 000,
-    data: {},
-  };
-  try {
-    var currentSheet = SpreadsheetApp.openById(sheetId);
-    var sheet = currentSheet.getSheetByName(sheetName);
-    var _sheetValuesList = sheet.deleteColumn(column + 1);
-    var valueToDelete = sheet.getSheetValues(
-      1,
-      column + 1,
-      sheet.getLastRow(),
-      1
-    );
-    responseObject.status = 200;
-    responseObject.data = valueToDelete;
-  } catch (e) {
-    responseObject.status = 400;
-    responseObject.data = e;
-    Logger.log(e);
-  }
-  response = JSON.stringify(responseObject);
-  return response;
-}
+  DefaultSample: () => {},
+};
 
 function GetSheetData(sheetId, sheetName) {
   var sheetData = '';
