@@ -1,6 +1,7 @@
 import { CustomLogger } from './../../Modules/Helper';
 import {
-  mainURL, testURL,
+  mainURL,
+  testURL,
   PostGetAvailableMonthlyExpenseData,
   SUCCESS_STATUS_CODE,
 } from './../URLConstants';
@@ -13,14 +14,14 @@ export const ExpensesService = {
     failureCallBack = null
   ) => {
     try {
-      const url = `${mainURL}${PostGetAvailableMonthlyExpenseData}`;//
+      const url = `${mainURL}${PostGetAvailableMonthlyExpenseData}`; //
       const postDataReqObj = {
-          method_name: 'getDatabyMonth',
-          user_request: 'getDatabyMonth',
-          service_request_data: {
-            month: params.month,
-            year: params.year,
-        }
+        method_name: 'getDatabyMonth',
+        user_request: 'getDatabyMonth',
+        service_request_data: {
+          month: params.month,
+          year: params.year,
+        },
       };
       /*
       //console.log(params.month);
@@ -28,8 +29,8 @@ export const ExpensesService = {
       //console.log(JSON.parse(JSON.stringify(params)));
       */
 
-      const response = await PostDataDemo(url,  postDataReqObj);
-      
+      const response = await PostData(url, postDataReqObj);
+
       //return JSON.parse(response);
       /*
       if(response.ok){
@@ -37,9 +38,16 @@ export const ExpensesService = {
         console.log(responseJSONObj);
       }
       */
-     if(successCallBack !== null && successCallBack !== undefined){
-      successCallBack(JSON.parse(response));
-     }
+      if (response.isSuccesful) {
+        if (successCallBack !== null && successCallBack !== undefined) {
+          //successCallBack(JSON.parse(response));
+          successCallBack(response.data);
+        }
+      } else {
+        if (failureCallBack !== null && failureCallBack !== undefined) {
+          //failureCallBack(ex);
+        }
+      }
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
       if (failureCallBack !== null && failureCallBack !== undefined) {
@@ -49,8 +57,6 @@ export const ExpensesService = {
   },
 };
 
-
-
 export const ViewExpensesService = {
   getExpenses: async (
     params,
@@ -58,17 +64,17 @@ export const ViewExpensesService = {
     failureCallBack = null
   ) => {
     try {
-      const _testURL = 'https://freepass.cyclic.app/test';//'https://reqres.in/api/users?page=2';
+      const _testURL = 'https://freepass.cyclic.app/test'; //'https://reqres.in/api/users?page=2';
       //const testURL = `https://tiny-pink-jay-veil.cyclic.app/proxy/?url=${_testURL}`; //mainURL + PostGetAvailableMonthlyExpenseData;
-      const proxy = "https://freepass.cyclic.app/proxy/?url=";//"http://localhost:3010/proxy/?url=";//https://freepass.cyclic.app/proxy/?url=
-      const url = `${proxy}${_testURL}`;//`${proxy}${mainURL}${PostGetAvailableMonthlyExpenseData}`;//"https://freepass.cyclic.app/test";//`https://freepass.cyclic.app/proxy?url${mainURL}${PostGetAvailableMonthlyExpenseData}`;
+      const proxy = 'https://freepass.cyclic.app/proxy/?url='; //"http://localhost:3010/proxy/?url=";//https://freepass.cyclic.app/proxy/?url=
+      const url = `${proxy}${_testURL}`; //`${proxy}${mainURL}${PostGetAvailableMonthlyExpenseData}`;//"https://freepass.cyclic.app/test";//`https://freepass.cyclic.app/proxy?url${mainURL}${PostGetAvailableMonthlyExpenseData}`;
       const postData = {
         method: 'GET',
         body: {
           method_name: 'getDatabyMonth',
           service_request_data: {
-            month: "July",//params.sheetName,
-            year: "2023"//params.year,
+            month: 'July', //params.sheetName,
+            year: '2023', //params.year,
           },
         },
         headers: {

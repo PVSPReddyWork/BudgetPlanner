@@ -16,6 +16,7 @@ export const PostData = async (
   successCallBack,
   failureCallBack
 ) => {
+  let responseData = null;
   try {
     const _reqbody = {
       url: url,
@@ -25,13 +26,13 @@ export const PostData = async (
     };
     let reqbody = JSON.parse(JSON.stringify(_reqbody));
     //console.log(JSON.stringify(reqbody));
-    fetch(`${proxy}${url}`, {
+    const response = await fetch(`${proxy}${url}`, {
       method: 'POST',
       body: JSON.stringify(reqbody) /***/,
       headers: {
         //'Content-Type': 'application/json'
       } /**/,
-    })
+    }); /*
       .then((response) => {
         return response.text();
         //return response;
@@ -40,10 +41,39 @@ export const PostData = async (
         //console.log(responseText);
       })
       .catch((ex) => {});
+  */
     //return response;
+    if (response.ok) {
+      var textResp = await response.text();
+      var jsonResp = JSON.parse(textResp); //await response.json();
+      responseData = {
+        error: '',
+        message: '',
+        dataText: textResp,
+        data: jsonResp,
+        isSuccesful: true,
+      };
+    } else {
+      var textResp = await response.text();
+      responseData = {
+        error: '',
+        message: '',
+        dataText: textResp,
+        data: null,
+        isSuccesful: false,
+      };
+    }
   } catch (ex) {
     CustomLogger.ErrorLogger(ex);
+    responseData = {
+      error: ex,
+      message: '',
+      dataText: '',
+      data: null,
+      isSuccesful: false,
+    };
   }
+  return responseData;
 };
 
 export const PostDataDemo = async (
