@@ -10,7 +10,10 @@ import {
 import './ViewExpensePageStyles.css';
 
 const ViewExpenses_Page = (parms) => {
-  const [expensesData, setExpensesData] = useState({ expenses: [] });
+  const [expensesData, setExpensesData] = useState({
+    expenses: [],
+    totalExpense: 0,
+  });
   useEffect(() => {
     try {
       const timeObj = {
@@ -35,7 +38,17 @@ const ViewExpenses_Page = (parms) => {
     try {
       if (params !== null && params !== undefined) {
         const _expenseData = params.response_data;
-        setExpensesData({ ...expensesData, expenses: _expenseData });
+        let _totalExpense = 0;
+        _expenseData.forEach((item) => {
+          if (!isNaN(item.amountSpend)) {
+            _totalExpense += parseFloat(item.amountSpend);
+          }
+        });
+        setExpensesData({
+          ...expensesData,
+          expenses: _expenseData,
+          totalExpense: _totalExpense.toFixed(2),
+        });
       }
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
@@ -97,7 +110,19 @@ const ViewExpenses_Page = (parms) => {
     }
   };
 
-  return <div>{fillExpenseData()}</div>;
+  return (
+    <div>
+      <div className="expense_item_row">
+        <div class="expense_total_text">
+          <p class="expense_item_text">Total Amount: </p>
+        </div>
+        <div class="expense_total_value">
+          <p class="expense_item_text">{expensesData.totalExpense}</p>
+        </div>
+      </div>
+      {fillExpenseData()}
+    </div>
+  );
 };
 
 const ViewExpensesPage = ViewExpenses_Page;

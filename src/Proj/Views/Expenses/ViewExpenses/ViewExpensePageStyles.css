@@ -3,6 +3,18 @@
   flex-direction: row;
 }
 
+.expense_total_text {
+  /* width: (calc((3 * (100))+25))px; */
+  flex: 1;
+  margin: 1px;
+  background-color: aqua;
+}
+.expense_total_value {
+  width: 100px;
+  margin: 1px;
+  background-color: aqua;
+}
+
 .expense_item_column {
   display: block;
   background-color: aqua;
