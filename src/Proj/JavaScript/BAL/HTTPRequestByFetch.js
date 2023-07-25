@@ -1,6 +1,6 @@
 import { CustomLogger } from '../Modules/Helper';
 import { proxy } from './URLConstants.js';
-import { VIEW_EXPENSE_DATA } from './Services/TempData';
+import { VIEW_EXPENSE_DATA, VIEW_EXPENSE_DATA_TEXT } from './Services/TempData';
 
 export const GENERAL_HEADERS = {
   Accept: '*/*',
@@ -45,6 +45,7 @@ export const PostData = async (
     //return response;
     if (response.ok) {
       var textResp = await response.text();
+      console.log(textResp);
       var jsonResp = JSON.parse(textResp); //await response.json();
       responseData = {
         error: '',
@@ -90,9 +91,16 @@ export const PostDataDemo = async (
       body: postDataReqObj,
     };
     let reqbody = JSON.parse(JSON.stringify(_reqbody));
-    console.log(JSON.stringify(reqbody));
-    console.log(JSON.parse(VIEW_EXPENSE_DATA));
-    return VIEW_EXPENSE_DATA;
+    //console.log(JSON.stringify(reqbody));
+    //console.log(JSON.parse(VIEW_EXPENSE_DATA));
+    const responseData = {
+      error: '',
+      message: '',
+      dataText: VIEW_EXPENSE_DATA_TEXT,
+      data: VIEW_EXPENSE_DATA,
+      isSuccesful: true,
+    };
+    return responseData; //JSON.stringify(VIEW_EXPENSE_DATA);
     //return response;
   } catch (ex) {
     CustomLogger.ErrorLogger(ex);
