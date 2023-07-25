@@ -140,12 +140,13 @@ export const MonthsObject= [
     monthNumber: '12',
   },
 ];
+var defaultDate = new Date();
 export const DateTimeManipulations = {
-  getDay: function (date = new Date()) {
+  getDay: function (date = defaultDate) {
     const currentDayDate = date.getDate();
     return currentDayDate;
   },
-  getMonth: function (date = new Date()) {
+  getMonth: function (date = defaultDate) {
     const currentMonthNumber = date.getMonth() + 1;
     let currentMonthObject = {};
     MonthsObject.forEach((monthItem) => {
