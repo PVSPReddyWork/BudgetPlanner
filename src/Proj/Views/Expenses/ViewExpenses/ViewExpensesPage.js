@@ -55,36 +55,30 @@ const ViewExpenses_Page = (parms) => {
     }
   };
 
-  const fillExpenseData = () => {
+  const fillExpenseDataHelper = (item) => {
     try {
-      if (
-        expensesData.expenses !== null &&
-        expensesData.expenses !== undefined &&
-        expensesData.expenses.length > 0
-      ) {
-        var expenseTableUIData = expensesData.expenses.map((item) => {
-          return (
-            <>
-              <div class="expense_item_row">
-                <div class="expense_item_column expense_item_text_index">
-                  <p class="expense_item_text">{item.index}</p>
-                </div>
-                {/* <div class="expense_item_column">
+      return (
+        <>
+          <div class="expense_item_row">
+            <div class="expense_item_column expense_item_text_index">
+              <p class="expense_item_text">{item.index}</p>
+            </div>
+            {/* <div class="expense_item_column">
                   <p class="expense_item_text">{item.dateOfPurchase}</p>
                 </div> */}
-                <div class="expense_item_column">
-                  <p class="expense_item_text">{item.nameOfPurchase}</p>
-                </div>
-                <div class="expense_item_column">
-                  <p class="expense_item_text">{item.expenditureType}</p>
-                </div>
-                <div class="expense_item_column">
-                  <p class="expense_item_text">{item.paidBy}</p>
-                </div>
-                <div class="expense_item_column">
-                  <p class="expense_item_text">{item.amountSpend}</p>
-                </div>
-                {/* <div class="expense_item_column">
+            <div class="expense_item_column">
+              <p class="expense_item_text">{item.nameOfPurchase}</p>
+            </div>
+            <div class="expense_item_column">
+              <p class="expense_item_text">{item.expenditureType}</p>
+            </div>
+            <div class="expense_item_column">
+              <p class="expense_item_text">{item.paidBy}</p>
+            </div>
+            <div class="expense_item_column">
+              <p class="expense_item_text">{item.amountSpend}</p>
+            </div>
+            {/* <div class="expense_item_column">
                   <p class="expense_item_text">{item.dateCreated}</p>
                 </div>
                 <div class="expense_item_column">
@@ -93,9 +87,29 @@ const ViewExpenses_Page = (parms) => {
                 <div class="expense_item_column">
                   <p class="expense_item_text">{item.isSynced}</p>
                 </div> */}
-              </div>
+          </div>
+        </>
+      );
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
+  const fillExpenseData = () => {
+    try {
+      if (
+        expensesData.expenses !== null &&
+        expensesData.expenses !== undefined &&
+        expensesData.expenses.length > 0
+      ) {
+        var expenseTableUIData = expensesData.expenses.map((item) => {
+          return fillExpenseDataHelper(item);
+          /*
+          var itemUI = (
+            <>
             </>
           );
+          return itemUI*/
         });
         return <>{expenseTableUIData}</>;
       } else {
@@ -120,6 +134,18 @@ const ViewExpenses_Page = (parms) => {
           <p class="expense_item_text">{expensesData.totalExpense}</p>
         </div>
       </div>
+      {fillExpenseDataHelper({
+        index: 'S.No',
+        dateOfPurchase: 'Purchase Date',
+        nameOfPurchase: 'Name',
+        expenditureType: 'Type',
+        paidBy: 'Paid Via',
+        amountSpend: 'Amount',
+        details: 'Details',
+        dateCreated: 'Added On',
+        expenditureId: '',
+        isSynced: '',
+      })}
       {fillExpenseData()}
     </div>
   );
