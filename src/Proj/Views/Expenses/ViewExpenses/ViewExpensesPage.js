@@ -40,10 +40,27 @@ const ViewExpenses_Page = (parms) => {
         const _expenseData = params.response_data;
         let _totalExpense = 0;
         _expenseData.forEach((item) => {
+          console.log(item);
+          const purchaseDate = new Date(item.dateOfPurchase);
+          let displayDate = `${purchaseDate.getDate()}/${
+            purchaseDate.getMonth() + 1
+          }/${purchaseDate.getFullYear()}`;
+          console.log(item.dateOfPurchase);
+          console.log(displayDate);
+          item.displayDate = displayDate;
+          //item.dateOfPurchase = `${purchaseDate.getDay()}/${purchaseDate.getMonth()}/${purchaseDate.getFullYear()}`;
           if (!isNaN(item.amountSpend)) {
             _totalExpense += parseFloat(item.amountSpend);
           }
         });
+        /*
+        _expenseData.sort(function (a, b) {
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+          // return new Date(b.dateOfPurchase) - new Date(a.dateOfPurchase);
+          return new Date(a.dateOfPurchase) - new Date(b.dateOfPurchase);
+        });
+        */
         setExpensesData({
           ...expensesData,
           expenses: _expenseData,
@@ -63,9 +80,9 @@ const ViewExpenses_Page = (parms) => {
             <div class="expense_item_column expense_item_text_index">
               <p class="expense_item_text">{item.index}</p>
             </div>
-            {/* <div class="expense_item_column">
-                  <p class="expense_item_text">{item.dateOfPurchase}</p>
-                </div> */}
+            <div class="expense_item_column">
+              <p class="expense_item_text">{item.displayDate}</p>
+            </div>
             <div class="expense_item_column">
               <p class="expense_item_text">{item.nameOfPurchase}</p>
             </div>
