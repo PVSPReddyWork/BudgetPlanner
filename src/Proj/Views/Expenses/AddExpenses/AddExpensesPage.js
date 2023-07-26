@@ -134,6 +134,21 @@ const AddExpenses_Page = (parms) => {
     }
   };
 
+  const onButtonClick = (e) => {
+    try {
+      console.log('clicked');
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
+  const onChanged = (e) => {
+    try {
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
   const AddFieldsUI = () => {
     try {
       var inputFields = expensesData.expenses.map((item) => {
@@ -180,8 +195,9 @@ const AddExpenses_Page = (parms) => {
         } else if (item.isEditor) {
           return (
             <div>
-              <input
-                type="Text"
+              <textarea
+                rows="4"
+                cols="25"
                 id={item.inputID}
                 onChange={onTextChanged}
                 placeHolder={item.placeHolder}
@@ -213,6 +229,7 @@ const AddExpenses_Page = (parms) => {
     <div>
       <p>This is under development</p>
       {AddFieldsUI()}
+      <button onClick={onButtonClick}>Submit</button>
     </div>
   );
 };
