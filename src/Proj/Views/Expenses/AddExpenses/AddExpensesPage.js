@@ -5,7 +5,19 @@ import {
 } from './../../../JavaScript/Modules/Helper.js';
 import { PaymentTypes, ExpenditureTypes } from './../ExpenseTypeConstants.js';
 
+import { ADD_EXPENSE_DATA } from './../../../JavaScript/BAL/Services/TempData.js';
+import { ExpensesService } from './../../../JavaScript/BAL/Services/ViewExpensesSAL.js';
+
 const AddExpenses_Page = (parms) => {
+  /*
+  expense_index: '',
+  expenditureId: '',
+  dateCreated: '',
+  isSynced: '1',
+  year: '',
+  month: '',
+  */
+
   const NAME_OF_PURCHASE = 'nameOfPurchase';
   const AMOUNT_SPEND = 'amountSpend';
   const PAID_BY = 'paidBy';
@@ -99,6 +111,22 @@ const AddExpenses_Page = (parms) => {
         isMandatory: true,
       },
     ],
+    /*
+    postData: {
+      expense_index: '',
+      expenditureId: '',
+      dateOfPurchase: '',
+      nameOfPurchase: '',
+      expenditureType: '',
+      paidBy: '',
+      amountSpend: '',
+      details: '',
+      dateCreated: '',
+      isSynced: '1',
+      year: '',
+      month: '',
+    },
+    */
   });
 
   const onTextChanged = (e) => {
@@ -173,6 +201,32 @@ const AddExpenses_Page = (parms) => {
         errorText += ' field(s) are mandatory, please fill a valid value';
         alert(errorText);
       } else {
+        let postData = {
+          expense_index: '',
+          expenditureId: '',
+          dateOfPurchase: '',
+          nameOfPurchase: '',
+          expenditureType: '',
+          paidBy: '',
+          amountSpend: '',
+          details: '',
+          dateCreated: '',
+          isSynced: '1',
+          year: '',
+          month: '',
+        };
+        expensesData.expenses.forEach((item) => {
+          postData[item.key] = item.value;
+        });
+        const _purchaseDate = new Date(postData.dateOfPurchase);
+        if (_purchaseDate !== null && _purchaseDate !== undefined) {
+          postData.month = _purchaseDate.getMonth() + 1;
+          postData.year = _purchaseDate.getFullYear();
+        }
+        postData.dateCreated = new Date();
+        postData.expenditureId = DateTimeManipulations.getTicks();
+        //console.log(JSON.stringify(postData));
+        ExpensesService.addExpenses(ADD_EXPENSE_DATA);
       }
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);

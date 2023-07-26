@@ -56,45 +56,40 @@ export const ExpensesService = {
     }
   },
   addExpenses: async (
-    params,
+    expensesRequestParms,
     successCallBack = null,
     failureCallBack = null
   ) => {
     try {
       const url = `${mainURL}${PostExpenditureURL}`; //
       const postDataReqObj = {
-        method_name: 'getDatabyMonth',
-        user_request: 'getDatabyMonth',
+        method_name: 'addNewBudgetData',
         service_request_data: {
-          month: params.month,
-          year: params.year,
+          expense_index: '',
+          expenditureId: expensesRequestParms.expenditureId,
+          dateOfPurchase: expensesRequestParms.dateOfPurchase,
+          nameOfPurchase: expensesRequestParms.nameOfPurchase,
+          expenditureType: expensesRequestParms.expenditureType,
+          paidBy: expensesRequestParms.paidBy,
+          amountSpend: expensesRequestParms.amountSpend,
+          details: expensesRequestParms.details,
+          dateCreated: expensesRequestParms.dateCreated,
+          isSynced: '1',
+          year: expensesRequestParms.year,
+          month: expensesRequestParms.month,
         },
       };
       /*
-      //console.log(params.month);
-      //console.log(params.year);
-      //console.log(JSON.parse(JSON.stringify(params)));
-      */
-
       const response = await PostDataDemo(url, postDataReqObj);
-
-      //return JSON.parse(response);
-      /*
-      if(response.ok){
-        const responseJSONObj = await response.text();
-        console.log(responseJSONObj);
-      }
-      */
       if (response.isSuccesful) {
         if (successCallBack !== null && successCallBack !== undefined) {
-          //successCallBack(JSON.parse(response));
           successCallBack(response.data);
         }
       } else {
         if (failureCallBack !== null && failureCallBack !== undefined) {
-          //failureCallBack(ex);
         }
       }
+      */
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
       if (failureCallBack !== null && failureCallBack !== undefined) {
