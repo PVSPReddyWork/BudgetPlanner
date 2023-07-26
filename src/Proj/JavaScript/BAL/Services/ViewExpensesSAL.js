@@ -55,6 +55,53 @@ export const ExpensesService = {
       }
     }
   },
+  addExpenses: async (
+    params,
+    successCallBack = null,
+    failureCallBack = null
+  ) => {
+    try {
+      const url = `${mainURL}${PostExpenditureURL}`; //
+      const postDataReqObj = {
+        method_name: 'getDatabyMonth',
+        user_request: 'getDatabyMonth',
+        service_request_data: {
+          month: params.month,
+          year: params.year,
+        },
+      };
+      /*
+      //console.log(params.month);
+      //console.log(params.year);
+      //console.log(JSON.parse(JSON.stringify(params)));
+      */
+
+      const response = await PostDataDemo(url, postDataReqObj);
+
+      //return JSON.parse(response);
+      /*
+      if(response.ok){
+        const responseJSONObj = await response.text();
+        console.log(responseJSONObj);
+      }
+      */
+      if (response.isSuccesful) {
+        if (successCallBack !== null && successCallBack !== undefined) {
+          //successCallBack(JSON.parse(response));
+          successCallBack(response.data);
+        }
+      } else {
+        if (failureCallBack !== null && failureCallBack !== undefined) {
+          //failureCallBack(ex);
+        }
+      }
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+      if (failureCallBack !== null && failureCallBack !== undefined) {
+        failureCallBack(ex);
+      }
+    }
+  },
 };
 
 export const ViewExpensesService = {
