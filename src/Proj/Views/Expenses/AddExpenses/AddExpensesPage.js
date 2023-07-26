@@ -62,7 +62,7 @@ const AddExpenses_Page = (parms) => {
         legendTitle: 'Date of Purchase',
         hintText: '',
         isError: false,
-        value: '',
+        value: '2023-07-26T18:39',
         isDatePicker: true,
       },
       {
@@ -102,7 +102,6 @@ const AddExpenses_Page = (parms) => {
         }
       });
       setExpensesData({ ...expensesData, expenses: _expenses });
-      console.log(expensesData.expenses);
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -121,7 +120,6 @@ const AddExpenses_Page = (parms) => {
         }
       });
       setExpensesData({ ...expensesData, expenses: _expenses });
-      console.log(expensesData.expenses);
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -129,6 +127,17 @@ const AddExpenses_Page = (parms) => {
 
   const onDateChanged = (e) => {
     try {
+      let _expenses = expensesData.expenses;
+      _expenses.forEach((item) => {
+        try {
+          if (item.inputID === e.target.id) {
+            item.value = e.target.value ?? '';
+          }
+        } catch (ex) {
+          CustomLogger.ErrorLogger(ex);
+        }
+      });
+      setExpensesData({ ...expensesData, expenses: _expenses });
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -136,7 +145,7 @@ const AddExpenses_Page = (parms) => {
 
   const onButtonClick = (e) => {
     try {
-      console.log('clicked');
+      console.log(expensesData.expenses);
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -153,11 +162,25 @@ const AddExpenses_Page = (parms) => {
     try {
       var inputFields = expensesData.expenses.map((item) => {
         if (item.isDatePicker) {
+          const today = new Date();
+          const maxDateString = `${today.getFullYear()}-${
+            today.getMonth() + 1 < 10
+              ? '0' + (today.getMonth() + 1).toString()
+              : (today.getMonth() + 1).toString()
+          }-${
+            today.getDate() + 1 < 10
+              ? '0' + today.getDate().toString()
+              : today.getDate().toString()
+          }T${today.getHours()}:${today.getMinutes()}`;
+          //console.log(maxDateString);
           return (
             <div>
+              {/*max="2018-06-14T00:00"*/}
               <input
                 type="datetime-local"
-                placeHolder={item.placeHolder}
+                max={maxDateString}
+                id={item.inputID}
+                onChange={onDateChanged}
                 value={item.value}
               />
             </div>
