@@ -3,9 +3,15 @@ import {
   mainURL,
   testURL,
   PostGetAvailableMonthlyExpenseData,
+  PostExpenditureURL,
   SUCCESS_STATUS_CODE,
 } from './../URLConstants';
-import { PostData, PostDataDemo, PostforGetData } from '../HTTPRequestByFetch';
+import {
+  PostData,
+  PostDatabyProxy,
+  PostDataDemo,
+  PostforGetData,
+} from '../HTTPRequestByFetch';
 
 export const ExpensesService = {
   getExpenses: async (
@@ -29,7 +35,7 @@ export const ExpensesService = {
       //console.log(JSON.parse(JSON.stringify(params)));
       */
 
-      const response = await PostData(url, postDataReqObj);
+      const response = await PostDatabyProxy(url, postDataReqObj);
 
       //return JSON.parse(response);
       /*
@@ -46,6 +52,59 @@ export const ExpensesService = {
       } else {
         if (failureCallBack !== null && failureCallBack !== undefined) {
           //failureCallBack(ex);
+        }
+      }
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+      if (failureCallBack !== null && failureCallBack !== undefined) {
+        failureCallBack(ex);
+      }
+    }
+  },
+  addExpenses: async (
+    expensesRequestParms,
+    successCallBack = null,
+    failureCallBack = null
+  ) => {
+    try {
+      const url = `${mainURL}${PostExpenditureURL}`; //
+      const postDataReqObj = {
+        method_name: 'addNewBudgetData',
+        user_request: 'addNewBudgetData',
+        service_request_data: {
+          expense_index: '',
+          expenditureId: expensesRequestParms.expenditureId,
+          dateOfPurchase: expensesRequestParms.dateOfPurchase,
+          nameOfPurchase: expensesRequestParms.nameOfPurchase,
+          expenditureType: expensesRequestParms.expenditureType,
+          paidBy: expensesRequestParms.paidBy,
+          amountSpend: expensesRequestParms.amountSpend,
+          details: expensesRequestParms.details,
+          dateCreated: expensesRequestParms.dateCreated,
+          isSynced: '1',
+          year: expensesRequestParms.year,
+          month: expensesRequestParms.month,
+        },
+      };
+      const response = await PostDatabyProxy(url, postDataReqObj);
+      //console.log(response);
+      if (response.isSuccesful) {
+        if (
+          response.data !== null &&
+          response.data !== undefined &&
+          (response.data.status_code === '200' || 200)
+        ) {
+          if (successCallBack !== null && successCallBack !== undefined) {
+            successCallBack(response.data);
+          } else {
+            if (failureCallBack !== null && failureCallBack !== undefined) {
+            }
+            failureCallBack('');
+          }
+        }
+      } else {
+        if (failureCallBack !== null && failureCallBack !== undefined) {
+          failureCallBack('');
         }
       }
     } catch (ex) {
