@@ -6,7 +6,12 @@ import {
   PostExpenditureURL,
   SUCCESS_STATUS_CODE,
 } from './../URLConstants';
-import { PostData, PostDataDemo, PostforGetData } from '../HTTPRequestByFetch';
+import {
+  PostData,
+  PostDatabyProxy,
+  PostDataDemo,
+  PostforGetData,
+} from '../HTTPRequestByFetch';
 
 export const ExpensesService = {
   getExpenses: async (
@@ -30,7 +35,7 @@ export const ExpensesService = {
       //console.log(JSON.parse(JSON.stringify(params)));
       */
 
-      const response = await PostDataDemo(url, postDataReqObj);
+      const response = await PostDatabyProxy(url, postDataReqObj);
 
       //return JSON.parse(response);
       /*
@@ -65,6 +70,7 @@ export const ExpensesService = {
       const url = `${mainURL}${PostExpenditureURL}`; //
       const postDataReqObj = {
         method_name: 'addNewBudgetData',
+        user_request: 'addNewBudgetData',
         service_request_data: {
           expense_index: '',
           expenditureId: expensesRequestParms.expenditureId,
@@ -80,10 +86,16 @@ export const ExpensesService = {
           month: expensesRequestParms.month,
         },
       };
-
-      console.log(JSON.stringify(postDataReqObj));
-      const response = await PostData(url, postDataReqObj);
+      const response = await PostDatabyProxy(url, postDataReqObj);
       console.log(response);
+      /*
+      const response = await fetch(`${url}`, {
+        method: 'POST',
+        body: JSON.stringify(postDataReqObj),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }); /*
       /*
       const response = await PostDataDemo(url, postDataReqObj);
       if (response.isSuccesful) {

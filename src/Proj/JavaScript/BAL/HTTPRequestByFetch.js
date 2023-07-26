@@ -10,6 +10,73 @@ export const GENERAL_HEADERS = {
   'Accept-Encoding': ['gzip', 'deflate', 'br'],
 };
 
+export const PostDatabyProxy = async (
+  url,
+  postDataReqObj,
+  successCallBack,
+  failureCallBack
+) => {
+  let responseData = null;
+  try {
+    const _reqbody = {
+      url: url,
+      method: 'POST',
+      headers: GENERAL_HEADERS,
+      body: postDataReqObj,
+    };
+    let reqbody = JSON.parse(JSON.stringify(_reqbody));
+    console.log(JSON.stringify(reqbody));
+    const response = await fetch(`${proxy}${url}`, {
+      method: 'POST',
+      body: JSON.stringify(reqbody) /***/,
+      headers: {
+        //'Content-Type': 'application/json'
+      } /**/,
+    }); /*
+      .then((response) => {
+        return response.text();
+        //return response;
+      })
+      .then((responseText) => {
+        //console.log(responseText);
+      })
+      .catch((ex) => {});
+  */
+    //return response;
+    if (response.ok) {
+      var textResp = await response.text();
+      console.log(textResp);
+      var jsonResp = JSON.parse(textResp); //await response.json();
+      responseData = {
+        error: '',
+        message: '',
+        dataText: textResp,
+        data: jsonResp,
+        isSuccesful: true,
+      };
+    } else {
+      var textResp = await response.text();
+      responseData = {
+        error: '',
+        message: '',
+        dataText: textResp,
+        data: null,
+        isSuccesful: false,
+      };
+    }
+  } catch (ex) {
+    CustomLogger.ErrorLogger(ex);
+    responseData = {
+      error: ex,
+      message: '',
+      dataText: '',
+      data: null,
+      isSuccesful: false,
+    };
+  }
+  return responseData;
+};
+
 export const PostData = async (
   url,
   postDataReqObj,
@@ -25,7 +92,7 @@ export const PostData = async (
       body: postDataReqObj,
     };
     let reqbody = JSON.parse(JSON.stringify(_reqbody));
-    //console.log(JSON.stringify(reqbody));
+    console.log(JSON.stringify(reqbody));
     const response = await fetch(`${proxy}${url}`, {
       method: 'POST',
       body: JSON.stringify(reqbody) /***/,

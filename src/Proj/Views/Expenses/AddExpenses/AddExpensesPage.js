@@ -185,9 +185,8 @@ const AddExpenses_Page = (parms) => {
 
   const onButtonClick = (e) => {
     try {
-      ExpensesService.addExpenses(ADD_EXPENSE_DATA);
-      /*
-      console.log(expensesData.expenses);
+      //ExpensesService.addExpenses(ADD_EXPENSE_DATA);
+      //console.log(expensesData.expenses);
       let errorText = '';
       //let isValidToProceed=false;
       expensesData.expenses.forEach((item) => {
@@ -228,9 +227,24 @@ const AddExpenses_Page = (parms) => {
         postData.dateCreated = new Date();
         postData.expenditureId = DateTimeManipulations.getTicks();
         //console.log(JSON.stringify(postData));
-        ExpensesService.addExpenses(ADD_EXPENSE_DATA);
+        ExpensesService.addExpenses(postData, onInsertSuccess, onInsertFailure);
       }
-      */
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
+  const onInsertSuccess = (params) => {
+    try {
+      alert('Data Inserted Successfully');
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
+  const onInsertFailure = (params) => {
+    try {
+      alert('Data Insert Failed');
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
