@@ -87,26 +87,26 @@ export const ExpensesService = {
         },
       };
       const response = await PostDatabyProxy(url, postDataReqObj);
-      console.log(response);
-      /*
-      const response = await fetch(`${url}`, {
-        method: 'POST',
-        body: JSON.stringify(postDataReqObj),
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }); /*
-      /*
-      const response = await PostDataDemo(url, postDataReqObj);
+      //console.log(response);
       if (response.isSuccesful) {
-        if (successCallBack !== null && successCallBack !== undefined) {
-          successCallBack(response.data);
+        if (
+          response.data !== null &&
+          response.data !== undefined &&
+          (response.data.status_code === '200' || 200)
+        ) {
+          if (successCallBack !== null && successCallBack !== undefined) {
+            successCallBack(response.data);
+          } else {
+            if (failureCallBack !== null && failureCallBack !== undefined) {
+            }
+            failureCallBack('');
+          }
         }
       } else {
         if (failureCallBack !== null && failureCallBack !== undefined) {
+          failureCallBack('');
         }
       }
-      */
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
       if (failureCallBack !== null && failureCallBack !== undefined) {
