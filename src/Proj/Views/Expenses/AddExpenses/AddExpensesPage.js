@@ -89,6 +89,32 @@ const AddExpenses_Page = (parms) => {
     ],
   });
 
+  const onPickerSelectionChanged = (e) => {
+    try {
+      let _expenses = expensesData.expenses;
+      _expenses.forEach((item) => {
+        try {
+          if (item.inputID === e.target.id) {
+            item.value = e.target.value ?? '';
+          }
+        } catch (ex) {
+          CustomLogger.ErrorLogger(ex);
+        }
+      });
+      setExpensesData({ ...expensesData, expenses: _expenses });
+      console.log(expensesData.expenses);
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
+  const onTextChanged = (e) => {
+    try {
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
   const AddFieldsUI = () => {
     try {
       var inputFields = expensesData.expenses.map((item) => {
@@ -96,7 +122,7 @@ const AddExpenses_Page = (parms) => {
           return (
             <div>
               <input
-                type="Text"
+                type="datetime-local"
                 placeHolder={item.placeHolder}
                 value={item.value}
               />
@@ -115,11 +141,19 @@ const AddExpenses_Page = (parms) => {
         } else if (item.isPicker) {
           return (
             <div>
-              <input
-                type="Text"
-                placeHolder={item.placeHolder}
-                value={item.value}
-              />
+              <select
+                className="picker"
+                id={item.inputID}
+                onChange={onPickerSelectionChanged}
+              >
+                {/* <option value={null} disabled selected hidden> */}
+                <option value="" defaultValue>
+                  Select a {item.placeHolder}
+                </option>
+                {item.pickerData.map((item) => {
+                  return <option value={item}>{item}</option>;
+                })}
+              </select>
             </div>
           );
         } else if (item.isEditor) {
