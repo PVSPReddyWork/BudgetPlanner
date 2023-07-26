@@ -4,7 +4,7 @@ export const VIEW_EXPENSE_DATA_TEXT =
 export const ADD_EXPENSE_DATA = {
   expense_index: '',
   expenditureId: 638259803774550000,
-  dateOfPurchase: '2023-07-26T18:39',
+  dateOfPurchase: '2023-05-25T18:39',
   nameOfPurchase: 'Test Data',
   expenditureType: 'Groceries',
   paidBy: 'Cash',
@@ -13,7 +13,7 @@ export const ADD_EXPENSE_DATA = {
   dateCreated: '2023-07-26T14:59:37.455Z',
   isSynced: '1',
   year: 2023,
-  month: 7,
+  month: 5,
 };
 
 export const ADD_EXPENSE_DATA_1 = {

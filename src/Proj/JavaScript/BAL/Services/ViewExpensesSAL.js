@@ -3,6 +3,7 @@ import {
   mainURL,
   testURL,
   PostGetAvailableMonthlyExpenseData,
+  PostExpenditureURL,
   SUCCESS_STATUS_CODE,
 } from './../URLConstants';
 import { PostData, PostDataDemo, PostforGetData } from '../HTTPRequestByFetch';
@@ -79,6 +80,10 @@ export const ExpensesService = {
           month: expensesRequestParms.month,
         },
       };
+
+      console.log(JSON.stringify(postDataReqObj));
+      const response = await PostData(url, postDataReqObj);
+      console.log(response);
       /*
       const response = await PostDataDemo(url, postDataReqObj);
       if (response.isSuccesful) {

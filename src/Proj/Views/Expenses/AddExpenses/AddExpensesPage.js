@@ -185,6 +185,8 @@ const AddExpenses_Page = (parms) => {
 
   const onButtonClick = (e) => {
     try {
+      ExpensesService.addExpenses(ADD_EXPENSE_DATA);
+      /*
       console.log(expensesData.expenses);
       let errorText = '';
       //let isValidToProceed=false;
@@ -228,6 +230,7 @@ const AddExpenses_Page = (parms) => {
         //console.log(JSON.stringify(postData));
         ExpensesService.addExpenses(ADD_EXPENSE_DATA);
       }
+      */
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -256,7 +259,7 @@ const AddExpenses_Page = (parms) => {
           }T${today.getHours()}:${today.getMinutes()}`;
           //console.log(maxDateString);
           return (
-            <div>
+            <div key={item.key}>
               {/*max="2018-06-14T00:00"*/}
               <input
                 type="datetime-local"
@@ -269,19 +272,19 @@ const AddExpenses_Page = (parms) => {
           );
         } else if (item.isNumber) {
           return (
-            <div>
+            <div key={item.key}>
               <input
                 type="Number"
                 id={item.inputID}
                 onChange={onTextChanged}
-                placeHolder={item.placeHolder}
+                placeholder={item.placeHolder}
                 value={item.value}
               />
             </div>
           );
         } else if (item.isPicker) {
           return (
-            <div>
+            <div key={item.key}>
               <select
                 className="picker"
                 id={item.inputID}
@@ -299,25 +302,25 @@ const AddExpenses_Page = (parms) => {
           );
         } else if (item.isEditor) {
           return (
-            <div>
+            <div key={item.key}>
               <textarea
                 rows="4"
                 cols="25"
                 id={item.inputID}
                 onChange={onTextChanged}
-                placeHolder={item.placeHolder}
+                placeholder={item.placeHolder}
                 value={item.value}
               />
             </div>
           );
         } else {
           return (
-            <div>
+            <div key={item.key}>
               <input
                 type="Text"
                 id={item.inputID}
                 onChange={onTextChanged}
-                placeHolder={item.placeHolder}
+                placeholder={item.placeHolder}
                 value={item.value}
               />
             </div>
