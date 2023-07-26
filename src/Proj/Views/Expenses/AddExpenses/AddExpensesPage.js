@@ -89,6 +89,25 @@ const AddExpenses_Page = (parms) => {
     ],
   });
 
+  const onTextChanged = (e) => {
+    try {
+      let _expenses = expensesData.expenses;
+      _expenses.forEach((item) => {
+        try {
+          if (item.inputID === e.target.id) {
+            item.value = e.target.value ?? '';
+          }
+        } catch (ex) {
+          CustomLogger.ErrorLogger(ex);
+        }
+      });
+      setExpensesData({ ...expensesData, expenses: _expenses });
+      console.log(expensesData.expenses);
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
   const onPickerSelectionChanged = (e) => {
     try {
       let _expenses = expensesData.expenses;
@@ -108,7 +127,7 @@ const AddExpenses_Page = (parms) => {
     }
   };
 
-  const onTextChanged = (e) => {
+  const onDateChanged = (e) => {
     try {
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
@@ -133,6 +152,8 @@ const AddExpenses_Page = (parms) => {
             <div>
               <input
                 type="Number"
+                id={item.inputID}
+                onChange={onTextChanged}
                 placeHolder={item.placeHolder}
                 value={item.value}
               />
@@ -161,6 +182,8 @@ const AddExpenses_Page = (parms) => {
             <div>
               <input
                 type="Text"
+                id={item.inputID}
+                onChange={onTextChanged}
                 placeHolder={item.placeHolder}
                 value={item.value}
               />
@@ -171,6 +194,8 @@ const AddExpenses_Page = (parms) => {
             <div>
               <input
                 type="Text"
+                id={item.inputID}
+                onChange={onTextChanged}
                 placeHolder={item.placeHolder}
                 value={item.value}
               />
