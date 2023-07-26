@@ -28,25 +28,30 @@ const AddExpenses_Page = (parms) => {
       {
         key: NAME_OF_PURCHASE,
         inputID: NAME_OF_PURCHASE,
+        name: 'Expense Title',
         placeHolder: 'Enter Name/Title of Expense',
         legendTitle: 'Enter Name/Title of Expense',
         hintText: '',
         isError: false,
         value: '',
+        isMandatory: true,
       },
       {
         key: AMOUNT_SPEND,
         inputID: AMOUNT_SPEND,
+        name: 'Amount Spend',
         placeHolder: 'Amount Spend',
         legendTitle: 'Amount Spend',
         hintText: '',
         isError: false,
-        value: 0,
+        value: '',
         isNumber: true,
+        isMandatory: true,
       },
       {
         key: PAID_BY,
         inputID: PAID_BY,
+        name: 'Payment Type',
         placeHolder: 'Payment Type',
         legendTitle: 'Payment Type',
         hintText: '',
@@ -54,20 +59,24 @@ const AddExpenses_Page = (parms) => {
         value: '',
         isPicker: true,
         pickerData: paymentTypePickerValues,
+        isMandatory: true,
       },
       {
         key: DATE_OF_PURCHASE,
         inputID: DATE_OF_PURCHASE,
+        name: 'Purchase Date',
         placeHolder: 'Date of Purchase',
         legendTitle: 'Date of Purchase',
         hintText: '',
         isError: false,
         value: '2023-07-26T18:39',
         isDatePicker: true,
+        isMandatory: true,
       },
       {
         key: EXPENDITURE_TYPE,
         inputID: EXPENDITURE_TYPE,
+        name: 'Expense Type',
         placeHolder: 'Expenditure Type',
         legendTitle: 'Expenditure Type',
         hintText: '',
@@ -75,16 +84,19 @@ const AddExpenses_Page = (parms) => {
         value: '',
         isPicker: true,
         pickerData: expenditureTypePickerValues,
+        isMandatory: true,
       },
       {
         key: DETAILS,
         inputID: DETAILS,
+        name: 'Details',
         placeHolder: 'Details',
         legendTitle: 'Details',
         hintText: '',
         isError: false,
         value: '',
         isEditor: true,
+        isMandatory: true,
       },
     ],
   });
@@ -146,6 +158,22 @@ const AddExpenses_Page = (parms) => {
   const onButtonClick = (e) => {
     try {
       console.log(expensesData.expenses);
+      let errorText = '';
+      //let isValidToProceed=false;
+      expensesData.expenses.forEach((item) => {
+        if (
+          (item.isMandatory && item.value === null) ||
+          item.value === undefined ||
+          item.value === ''
+        ) {
+          errorText += `${errorText === '' ? '' : ', '}${item.name}`;
+        }
+      });
+      if (errorText !== '') {
+        errorText += ' field(s) are mandatory, please fill a valid value';
+        alert(errorText);
+      } else {
+      }
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
