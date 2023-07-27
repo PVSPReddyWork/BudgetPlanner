@@ -25,7 +25,7 @@ export const PostDatabyProxy = async (
       body: postDataReqObj,
     };
     let reqbody = JSON.parse(JSON.stringify(_reqbody));
-    console.log(JSON.stringify(reqbody));
+    //console.log(JSON.stringify(reqbody));
     const response = await fetch(`${proxy}${url}`, {
       method: 'POST',
       body: JSON.stringify(reqbody) /***/,
@@ -45,7 +45,7 @@ export const PostDatabyProxy = async (
     //return response;
     if (response.ok) {
       var textResp = await response.text();
-      console.log(textResp);
+      //console.log(textResp);
       var jsonResp = JSON.parse(textResp); //await response.json();
       responseData = {
         error: '',
@@ -92,7 +92,7 @@ export const PostData = async (
       body: postDataReqObj,
     };
     let reqbody = JSON.parse(JSON.stringify(_reqbody));
-    console.log(JSON.stringify(reqbody));
+    //console.log(JSON.stringify(reqbody));
     const response = await fetch(`${proxy}${url}`, {
       method: 'POST',
       body: JSON.stringify(reqbody) /***/,
@@ -112,7 +112,7 @@ export const PostData = async (
     //return response;
     if (response.ok) {
       var textResp = await response.text();
-      console.log(textResp);
+      //console.log(textResp);
       var jsonResp = JSON.parse(textResp); //await response.json();
       responseData = {
         error: '',
