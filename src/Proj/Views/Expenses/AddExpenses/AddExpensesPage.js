@@ -328,8 +328,16 @@ const AddExpenses_Page = (parms) => {
                 <option value="" defaultValue>
                   Select a {item.placeHolder}
                 </option>
-                {item.pickerData.map((item) => {
-                  return <option value={item}>{item}</option>;
+                {item.pickerData.map((optionItem) => {
+                  if (item.value !== optionItem) {
+                    return <option value={optionItem}>{optionItem}</option>;
+                  } else {
+                    return (
+                      <option value={optionItem} selected>
+                        {optionItem}
+                      </option>
+                    );
+                  }
                 })}
               </select>
             </div>
@@ -370,7 +378,6 @@ const AddExpenses_Page = (parms) => {
   return (
     <div className="addExpenseHolder">
       <div>
-        <p>This is under development</p>
         {AddFieldsUI()}
         <button onClick={onButtonClick}>Submit</button>
       </div>
