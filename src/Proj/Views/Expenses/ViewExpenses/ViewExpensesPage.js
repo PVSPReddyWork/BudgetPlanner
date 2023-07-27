@@ -13,18 +13,37 @@ const ViewExpenses_Page = (parms) => {
   const [expensesData, setExpensesData] = useState({
     expenses: [],
     totalExpense: 0,
+    requiredDate: `${DateTimeManipulations.getYear()}-${
+      DateTimeManipulations.getMonth(false) < 10
+        ? '0' + DateTimeManipulations.getMonth(false).toString()
+        : DateTimeManipulations.getMonth(false).toString()
+    }`,
   });
+
   useEffect(() => {
     try {
-      const timeObj = {
-        year: DateTimeManipulations.getYear(),
-        month: DateTimeManipulations.getMonth(),
-      };
-      getExpenses(timeObj);
+      const selectedDate = expensesData.requiredDate;
+      let selectedYear = selectedDate.split('-')[0];
+      let _selectedMonth = selectedDate.split('-')[1];
+      let selectedMonth = 0;
+      if (!isNaN(_selectedMonth)) {
+        selectedMonth = parseInt(_selectedMonth);
+      }
+      if (selectedMonth > 0) {
+        const timeObj = {
+          year: parseInt(selectedYear),
+          month: DateTimeManipulations.getMonthByNumber(
+            selectedMonth.toString()
+          ),
+        };
+        getExpenses(timeObj);
+      } else {
+        alert('Date Error');
+      }
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
-  }, []);
+  }, [expensesData.requiredDate]);
 
   const getExpenses = (params) => {
     try {
@@ -37,16 +56,24 @@ const ViewExpenses_Page = (parms) => {
   const onGetExpenses = (params) => {
     try {
       if (params !== null && params !== undefined) {
-        const _expenseData = params.response_data;
+        let _expenseData = params.response_data;
+        if (
+          _expenseData === null ||
+          _expenseData === undefined ||
+          _expenseData === '' ||
+          _expenseData === ' '
+        ) {
+          _expenseData = [];
+        }
         let _totalExpense = 0;
         _expenseData.forEach((item) => {
-          console.log(item);
+          //console.log(item);
           const purchaseDate = new Date(item.dateOfPurchase);
           let displayDate = `${purchaseDate.getDate()}/${
             purchaseDate.getMonth() + 1
           }/${purchaseDate.getFullYear()}`;
-          console.log(item.dateOfPurchase);
-          console.log(displayDate);
+          //console.log(item.dateOfPurchase);
+          //console.log(displayDate);
           item.displayDate = displayDate;
           //item.dateOfPurchase = `${purchaseDate.getDay()}/${purchaseDate.getMonth()}/${purchaseDate.getFullYear()}`;
           if (!isNaN(item.amountSpend)) {
@@ -76,33 +103,33 @@ const ViewExpenses_Page = (parms) => {
     try {
       return (
         <>
-          <div class="expense_item_row">
-            <div class="expense_item_column expense_item_text_index">
-              <p class="expense_item_text">{item.index}</p>
+          <div className="expense_item_row">
+            <div className="expense_item_column expense_item_text_index">
+              <p className="expense_item_text">{item.index}</p>
             </div>
-            <div class="expense_item_column">
-              <p class="expense_item_text">{item.displayDate}</p>
+            <div className="expense_item_column">
+              <p className="expense_item_text">{item.displayDate}</p>
             </div>
-            <div class="expense_item_column">
-              <p class="expense_item_text">{item.nameOfPurchase}</p>
+            <div className="expense_item_column">
+              <p className="expense_item_text">{item.nameOfPurchase}</p>
             </div>
-            <div class="expense_item_column">
-              <p class="expense_item_text">{item.expenditureType}</p>
+            <div className="expense_item_column">
+              <p className="expense_item_text">{item.expenditureType}</p>
             </div>
-            <div class="expense_item_column">
-              <p class="expense_item_text">{item.paidBy}</p>
+            <div className="expense_item_column">
+              <p className="expense_item_text">{item.paidBy}</p>
             </div>
-            <div class="expense_item_column">
-              <p class="expense_item_text">{item.amountSpend}</p>
+            <div className="expense_item_column">
+              <p className="expense_item_text">{item.amountSpend}</p>
             </div>
-            {/* <div class="expense_item_column">
-                  <p class="expense_item_text">{item.dateCreated}</p>
+            {/* <div className="expense_item_column">
+                  <p className="expense_item_text">{item.dateCreated}</p>
                 </div>
-                <div class="expense_item_column">
-                  <p class="expense_item_text">{item.expenditureId}</p>
+                <div className="expense_item_column">
+                  <p className="expense_item_text">{item.expenditureId}</p>
                 </div>
-                <div class="expense_item_column">
-                  <p class="expense_item_text">{item.isSynced}</p>
+                <div className="expense_item_column">
+                  <p className="expense_item_text">{item.isSynced}</p>
                 </div> */}
           </div>
         </>
@@ -141,14 +168,66 @@ const ViewExpenses_Page = (parms) => {
     }
   };
 
+  const setDateModule = () => {
+    try {
+      const maxDateString = `${DateTimeManipulations.getYear()}-${
+        DateTimeManipulations.getMonth(false) < 10
+          ? '0' + DateTimeManipulations.getMonth(false).toString()
+          : DateTimeManipulations.getMonth(false).toString()
+      }`;
+      /*
+      const today = new Date();
+      const maxDateString = `${today.getFullYear()}-${
+        today.getMonth() + 1 < 10
+          ? '0' + (today.getMonth() + 1).toString()
+          : (today.getMonth() + 1).toString()
+      }`;
+      */
+      //console.log(maxDateString);
+      return (
+        <div>
+          <input
+            type="month"
+            max={maxDateString}
+            onChange={onDateChanged}
+            value={expensesData.requiredDate}
+          />
+        </div>
+      );
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
+  const onDateChanged = (e) => {
+    try {
+      const selectedDate = e.target.value;
+      /*
+      let selectedYear = selectedDate.split('-')[0];
+      let selectedMonth = DateTimeManipulations.getMonthByNumber(
+        selectedDate.split('-')[1]
+      );
+      const timeObj = {
+        year: parseInt(selectedYear),
+        month: selectedMonth,
+      };
+      getExpenses(timeObj);
+      */
+      setExpensesData({ ...expensesData, requiredDate: selectedDate });
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
   return (
     <div>
+      {setDateModule()}
       <div className="expense_item_row">
-        <div class="expense_total_text">
-          <p class="expense_item_text">Total Amount: </p>
+        <div className="expense_total_text">
+          <p className="expense_item_text">Total Amount: </p>
         </div>
-        <div class="expense_total_value">
-          <p class="expense_item_text">{expensesData.totalExpense}</p>
+        <div className="expense_total_value">
+          <p className="expense_item_text">{expensesData.totalExpense}</p>
         </div>
       </div>
       {fillExpenseDataHelper({
