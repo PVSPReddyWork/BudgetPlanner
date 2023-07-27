@@ -6,9 +6,14 @@ import ErrorBoundary from './ErrorDisplayHandler/ErrorBoundaryPage.js';
 export default function App() {
   return (
     <div>
+      <CustomNavigation />
+    </div>
+  ); /*
+  return (
+    <div>
       <ErrorBoundary fallback={<p>Something went wrong</p>}>
         <CustomNavigation />
       </ErrorBoundary>
     </div>
-  );
+  );*/
 }

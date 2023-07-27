@@ -7,6 +7,7 @@ import { PaymentTypes, ExpenditureTypes } from './../ExpenseTypeConstants.js';
 
 import { ADD_EXPENSE_DATA } from './../../../JavaScript/BAL/Services/TempData.js';
 import { ExpensesService } from './../../../JavaScript/BAL/Services/ViewExpensesSAL.js';
+import './AddExpensesPageStyles.css';
 
 const AddExpenses_Page = (parms) => {
   /*
@@ -126,6 +127,11 @@ const AddExpenses_Page = (parms) => {
   },
   */ const [expensesData, setExpensesData] = useState({
     expenses: defaultExpenseValues,
+    isBusy: false,
+    /*
+    isSuccessCallBack: '',
+    isFailureCallBack: '',
+    */
   });
 
   const onTextChanged = (e) => {
@@ -184,7 +190,15 @@ const AddExpenses_Page = (parms) => {
 
   const onButtonClick = (e) => {
     try {
-      //ExpensesService.addExpenses(ADD_EXPENSE_DATA);
+      /** /
+      ExpensesService.addExpenses(
+        ADD_EXPENSE_DATA,
+        onInsertSuccess,
+        onInsertFailure
+      );
+      setExpensesData({ ...expensesData, isBusy: true });
+      /**/
+      /**/
       //console.log(expensesData.expenses);
       let errorText = '';
       //let isValidToProceed=false;
@@ -227,7 +241,8 @@ const AddExpenses_Page = (parms) => {
         postData.expenditureId = DateTimeManipulations.getTicks();
         //console.log(JSON.stringify(postData));
         ExpensesService.addExpenses(postData, onInsertSuccess, onInsertFailure);
-      }
+        setExpensesData({ ...expensesData, isBusy: true });
+      } /**/
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -236,7 +251,11 @@ const AddExpenses_Page = (parms) => {
   const onInsertSuccess = (params) => {
     try {
       alert('Data Inserted Successfully');
-      setExpensesData({ ...expensesData, expenses: defaultExpenseValues });
+      setExpensesData({
+        ...expensesData,
+        expenses: defaultExpenseValues,
+        isBusy: false,
+      });
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -245,6 +264,7 @@ const AddExpenses_Page = (parms) => {
   const onInsertFailure = (params) => {
     try {
       alert('Data Insert Failed');
+      setExpensesData({ ...expensesData, isBusy: false });
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -348,10 +368,19 @@ const AddExpenses_Page = (parms) => {
   };
 
   return (
-    <div>
-      <p>This is under development</p>
-      {AddFieldsUI()}
-      <button onClick={onButtonClick}>Submit</button>
+    <div className="addExpenseHolder">
+      <div>
+        <p>This is under development</p>
+        {AddFieldsUI()}
+        <button onClick={onButtonClick}>Submit</button>
+      </div>
+      {expensesData.isBusy ? (
+        <div className="addExpenseLoaderHolder">
+          <p>Loading... Please Wait</p>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
