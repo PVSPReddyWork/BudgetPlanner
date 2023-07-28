@@ -1,7 +1,13 @@
 .introPageHolder {
+  display: fixed;
+  flex-direction: column;
+  position: relative;
+}
+.mainContentHolder {
   display: flex;
   flex-direction: row;
 }
+
 .leftContentHolder {
   flex: 1;
   overflow-y: scroll;
@@ -19,4 +25,8 @@
   display: flex;
   justify-content: center;
   align-content: center;
+}
+
+.loginPopupHolder {
+  position: absolute;
 }

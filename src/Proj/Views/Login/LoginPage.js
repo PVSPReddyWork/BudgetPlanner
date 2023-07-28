@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import {
-  CustomLogger,
-  DateTimeManipulations,
-} from './../../JavaScript/Modules/Helper.js';
+import { CustomLogger } from './../../JavaScript/Modules/Helper.js';
 
 import { LoginService } from './../../JavaScript/BAL/Services/LoginService.js';
 import './LoginPageStyles.css';
 
-const Login_Page = (parms) => {
+const Login_Page = (params) => {
+  const { loginStyles, loginClassName, onLoginClicked } = params;
+
+  const loginMainHolderClassName = `addLoginHolder ${
+    loginClassName !== null && loginClassName !== undefined
+      ? loginClassName
+      : ''
+  }`;
+
   const USER_EMAIL = 'user_email';
   const USER_PASSWORD = 'user_password';
 
@@ -65,56 +70,9 @@ const Login_Page = (parms) => {
     }
   };
 
-  const onPickerSelectionChanged = (e) => {
+  const onLoginButtonClick = (e) => {
     try {
-      let _expenses = loginData.loginCredentials;
-      _expenses.forEach((item) => {
-        try {
-          if (item.inputID === e.target.id) {
-            item.value = e.target.value ?? '';
-          }
-        } catch (ex) {
-          CustomLogger.ErrorLogger(ex);
-        }
-      });
-      setLoginData({ ...loginData, loginCredentials: _expenses });
-    } catch (ex) {
-      CustomLogger.ErrorLogger(ex);
-    }
-  };
-
-  const onDateChanged = (e) => {
-    try {
-      let _expenses = loginData.loginCredentials;
-      _expenses.forEach((item) => {
-        try {
-          if (item.inputID === e.target.id) {
-            item.value = e.target.value ?? '';
-          }
-        } catch (ex) {
-          CustomLogger.ErrorLogger(ex);
-        }
-      });
-      setLoginData({ ...loginData, loginCredentials: _expenses });
-    } catch (ex) {
-      CustomLogger.ErrorLogger(ex);
-    }
-  };
-
-  const onButtonClick = (e) => {
-    try {
-      /** /
-      ExpensesService.addExpenses(
-        ADD_EXPENSE_DATA,
-        onInsertSuccess,
-        onInsertFailure
-      );
-      setLoginData({ ...loginData, isBusy: true });
-      /**/
-      /**/
-      //console.log(loginData.loginCredentials);
       let errorText = '';
-      //let isValidToProceed=false;
       loginData.loginCredentials.forEach((item) => {
         if (
           (item.isMandatory && item.value === null) ||
@@ -136,6 +94,9 @@ const Login_Page = (parms) => {
           postData[item.key] = item.value;
         });
         LoginService.login(postData, onInsertSuccess, onInsertFailure);
+        if (onLoginClicked !== null && onLoginClicked !== undefined) {
+          onLoginClicked();
+        }
         setLoginData({ ...loginData, isBusy: true });
       } /**/
     } catch (ex) {
@@ -159,7 +120,11 @@ const Login_Page = (parms) => {
   const onInsertFailure = (params) => {
     try {
       alert('Login failed');
-      setLoginData({ ...loginData, isBusy: false });
+      setLoginData({
+        ...loginData,
+        loginCredentials: defaultLoginValues,
+        isBusy: false,
+      });
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -194,10 +159,10 @@ const Login_Page = (parms) => {
   };
 
   return (
-    <div className="addLoginHolder">
+    <div className={loginMainHolderClassName} style={...loginStyles}>
       <div>
         {AddFieldsUI()}
-        <button onClick={onButtonClick}>Submit</button>
+        <button onClick={onLoginButtonClick}>Login</button>
       </div>
       {loginData.isBusy ? (
         <div className="addLoginLoaderHolder">
