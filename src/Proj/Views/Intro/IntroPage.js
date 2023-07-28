@@ -1,9 +1,10 @@
 import React from 'react';
+import { BUDGET_PLANNER_LOGO } from './../../JavaScript/Modules/ImageHelper.js';
 
 const Intro_Page = (parms) => {
   return (
     <div>
-      <p>This is under development</p>
+      <img src={BUDGET_PLANNER_LOGO} />
     </div>
   );
 };

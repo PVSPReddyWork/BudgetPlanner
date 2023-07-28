@@ -28,7 +28,7 @@ const CustomNavigation = (parms) => {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<IntroPage />} />
           <Route path="about" element={<About />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="view_expense" element={<ViewExpensePage />} />
