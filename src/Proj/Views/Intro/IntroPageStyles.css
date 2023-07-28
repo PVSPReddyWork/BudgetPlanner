@@ -1,0 +1,22 @@
+.introPageHolder {
+  display: flex;
+  flex-direction: row;
+}
+.leftContentHolder {
+  flex: 1;
+  overflow-y: scroll;
+  /* scrollbar-width: none; */
+  /* Hide scrollbar for IE, Edge and Firefox */
+  /*-ms-overflow-style: none; /* IE and Edge */
+  /*scrollbar-width: none; /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.leftContentHolder::-webkit-scrollbar {
+  display: none;
+}
+
+.rightContentHolder {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
