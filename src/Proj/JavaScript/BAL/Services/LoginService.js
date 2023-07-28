@@ -35,13 +35,24 @@ export const LoginService = {
       }
       */
       if (response.isSuccesful) {
-        if (successCallBack !== null && successCallBack !== undefined) {
-          //successCallBack(JSON.parse(response));
-          successCallBack(response.data);
+        //successCallBack(JSON.parse(response));
+        if (
+          response.data.status_code !== null &&
+          response.data.status_code !== undefined &&
+          (response.data.status_code === 200 ||
+            response.data.status_code === 201)
+        ) {
+          if (successCallBack !== null && successCallBack !== undefined) {
+            successCallBack(response.data);
+          }
+        } else {
+          if (failureCallBack !== null && failureCallBack !== undefined) {
+            failureCallBack(null);
+          }
         }
       } else {
         if (failureCallBack !== null && failureCallBack !== undefined) {
-          //failureCallBack(ex);
+          failureCallBack(null);
         }
       }
     } catch (ex) {
