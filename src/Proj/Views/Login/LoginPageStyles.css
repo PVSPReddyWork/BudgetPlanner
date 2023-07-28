@@ -1,0 +1,20 @@
+.addLoginHolder {
+  background-color: aqua;
+  position: relative;
+  display: flex;
+  /* flex: 1;
+  height: 100%;
+  width: 100%; */
+}
+
+.addLoginLoaderHolder {
+  background-color: yellow;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  /* visibility: hidden; */
+}
