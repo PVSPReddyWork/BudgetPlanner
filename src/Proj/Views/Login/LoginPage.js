@@ -4,7 +4,7 @@ import {
   DateTimeManipulations,
 } from './../../JavaScript/Modules/Helper.js';
 
-import { ExpensesService } from './../../JavaScript/BAL/Services/ViewExpensesSAL.js';
+import { LoginService } from './../../JavaScript/BAL/Services/LoginService.js';
 import './LoginPageStyles.css';
 
 const Login_Page = (parms) => {
@@ -129,31 +129,13 @@ const Login_Page = (parms) => {
         alert(errorText);
       } else {
         let postData = {
-          expense_index: '',
-          expenditureId: '',
-          dateOfPurchase: '',
-          nameOfPurchase: '',
-          expenditureType: '',
-          paidBy: '',
-          amountSpend: '',
-          details: '',
-          dateCreated: '',
-          isSynced: '1',
-          year: '',
-          month: '',
+          user_email: '',
+          user_password: '',
         };
         loginData.loginCredentials.forEach((item) => {
           postData[item.key] = item.value;
         });
-        const _purchaseDate = new Date(postData.dateOfPurchase);
-        if (_purchaseDate !== null && _purchaseDate !== undefined) {
-          postData.month = _purchaseDate.getMonth() + 1;
-          postData.year = _purchaseDate.getFullYear();
-        }
-        postData.dateCreated = new Date();
-        postData.expenditureId = DateTimeManipulations.getTicks();
-        //console.log(JSON.stringify(postData));
-        ExpensesService.addExpenses(postData, onInsertSuccess, onInsertFailure);
+        LoginService.login(postData, onInsertSuccess, onInsertFailure);
         setLoginData({ ...loginData, isBusy: true });
       } /**/
     } catch (ex) {
@@ -163,7 +145,7 @@ const Login_Page = (parms) => {
 
   const onInsertSuccess = (params) => {
     try {
-      alert('Data Inserted Successfully');
+      alert('Logged in successfully');
       setLoginData({
         ...loginData,
         loginCredentials: defaultLoginValues,
@@ -176,7 +158,7 @@ const Login_Page = (parms) => {
 
   const onInsertFailure = (params) => {
     try {
-      alert('Data Insert Failed');
+      alert('Login failed');
       setLoginData({ ...loginData, isBusy: false });
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
@@ -212,13 +194,13 @@ const Login_Page = (parms) => {
   };
 
   return (
-    <div className="addExpenseHolder">
+    <div className="addLoginHolder">
       <div>
         {AddFieldsUI()}
         <button onClick={onButtonClick}>Submit</button>
       </div>
       {loginData.isBusy ? (
-        <div className="addExpenseLoaderHolder">
+        <div className="addLoginLoaderHolder">
           <p>Loading... Please Wait</p>
         </div>
       ) : (

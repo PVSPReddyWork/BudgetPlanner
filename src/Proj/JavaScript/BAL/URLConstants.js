@@ -1,7 +1,8 @@
 ///export const proxy = 'http://localhost:3010/proxy/?url=';//
 export const proxy = 'https://freepass.cyclic.app/proxy/?url=';
 
-const googleProductionDeploymentID = 'AKfycbzs2Cr48wreD1To2qqd9SKtEWgkYPwDfvh11VQZGMt84dixT5gQ17LqPrr4Okhr9Jnh';
+const googleProductionDeploymentID =
+  'AKfycbzs2Cr48wreD1To2qqd9SKtEWgkYPwDfvh11VQZGMt84dixT5gQ17LqPrr4Okhr9Jnh';
 //'AKfycbzB8K1NqyYFbW-LZv5YBXS3SdKpAvO1xo5qx6HVfRvkneI0-1kVSSJtN2WFREdo9k47';
 //'AKfycbzFNvk34-PYMHm-ZMnpxOvNvwfPnMJQlu_-UvbyAdbc5IdQTDPDPWALLZto0gaLc3nq';
 //'AKfycby0bNrwB4PG2DzmbhFIg6oNE3VHYnWMmY7ZOwMw7-HQXPcnJYTDor1IqaB0YIb-oltM';
@@ -10,6 +11,8 @@ export const mainURL =
   'https://script.google.com/macros/s/' +
   googleProductionDeploymentID +
   '/exec';
+
+export const baseURL = `${baseURL}?Contenttype=application/json&userRequest=`;
 
 //https://script.google.com/macros/s/AKfycbxMBuIJPBf6hvtwrOUkVOJTvYH2C7JWIS9yBH4lBu8/dev
 const googleTestDeploymentID =
@@ -37,6 +40,9 @@ export const GetGroceriesListURL =
   '?Contenttype=application/json&userRequest=getGroceriesListData';
 export const PostBulkGroceriesURL =
   '?Contenttype=application/json&userRequest=addGroceriesListData';
+
+export const UserLoginURL =
+  '?Contenttype=application/json&userRequest=checkForUser';
 
 export const SUCCESS_STATUS_CODE = 201;
 //export const SUCCESS_STATUS_CODE = 200 || 201 ;
