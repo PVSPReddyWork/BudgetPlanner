@@ -3,10 +3,12 @@
   /* flex-direction: column; */
   position: relative;
   overflow: scroll;
+  flex: 1;
 }
 .mainContentHolder {
   display: flex;
   flex-direction: row;
+  flex: 1;
 }
 
 .leftContentHolder {
@@ -22,6 +24,15 @@
 .leftContentHolder::-webkit-scrollbar,
 .introPageHolder::-webkit-scrollbar {
   display: none;
+}
+
+.imageHolder {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  /* width: 50%; */
+  opacity: 28%;
 }
 
 .rightContentHolder {

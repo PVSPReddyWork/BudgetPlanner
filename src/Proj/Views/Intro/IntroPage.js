@@ -19,7 +19,7 @@ const Intro_Page = (parms) => {
       CustomLogger.ErrorLogger(ex);
     }
   };
-  
+
   const onLoginCompleted = () => {
     try {
       setIntroData({
@@ -34,7 +34,9 @@ const Intro_Page = (parms) => {
     <div className="introPageHolder">
       <div className="mainContentHolder">
         <div className="leftContentHolder">
-          <img src={BUDGET_PLANNER_LOGO} />
+          <div className="imageHolder">
+            <img src={BUDGET_PLANNER_LOGO} />
+          </div>
           <p>
             This is a Private website focusing on the admins daily expenditure,
             This website records the expenditure and save to the google sheets
@@ -44,9 +46,10 @@ const Intro_Page = (parms) => {
           </p>
         </div>
         <div className="rightContentHolder">
-          <div>
+          <button onClick={onLoginClicked}>Login</button>
+          {/* <div>
             <button onClick={onLoginClicked}>Login</button>
-          </div>
+          </div> */}
         </div>
       </div>
       {introData.data.showLoginPopup === true ? (
