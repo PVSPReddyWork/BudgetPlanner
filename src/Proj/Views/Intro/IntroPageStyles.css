@@ -1,7 +1,8 @@
 .introPageHolder {
-  display: fixed;
-  flex-direction: column;
+  display: flex;
+  /* flex-direction: column; */
   position: relative;
+  overflow: scroll;
 }
 .mainContentHolder {
   display: flex;
@@ -11,13 +12,15 @@
 .leftContentHolder {
   flex: 1;
   overflow-y: scroll;
+  height: 100%;
   /* scrollbar-width: none; */
   /* Hide scrollbar for IE, Edge and Firefox */
   /*-ms-overflow-style: none; /* IE and Edge */
   /*scrollbar-width: none; /* Firefox */
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
-.leftContentHolder::-webkit-scrollbar {
+.leftContentHolder::-webkit-scrollbar,
+.introPageHolder::-webkit-scrollbar {
   display: none;
 }
 
@@ -29,4 +32,11 @@
 
 .loginPopupHolder {
   position: absolute;
+  background-color: green;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-content: center;
+  /* visibility: hidden; */
 }

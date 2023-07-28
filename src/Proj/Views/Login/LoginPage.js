@@ -5,7 +5,7 @@ import { LoginService } from './../../JavaScript/BAL/Services/LoginService.js';
 import './LoginPageStyles.css';
 
 const Login_Page = (params) => {
-  const { loginStyles, loginClassName, onLoginClicked } = params;
+  const { loginStyles, loginClassName, onLoginClicked, onLoginProcessCompleted } = params;
 
   const loginMainHolderClassName = `addLoginHolder ${
     loginClassName !== null && loginClassName !== undefined
@@ -107,6 +107,9 @@ const Login_Page = (params) => {
   const onInsertSuccess = (params) => {
     try {
       alert('Logged in successfully');
+      if(onLoginProcessCompleted !== null && onLoginProcessCompleted !== undefined){
+        onLoginProcessCompleted();
+      }
       setLoginData({
         ...loginData,
         loginCredentials: defaultLoginValues,
