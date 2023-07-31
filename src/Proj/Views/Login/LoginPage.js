@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { CustomLogger } from './../../JavaScript/Modules/Helper.js';
 
 import { LoginService } from './../../JavaScript/BAL/Services/LoginService.js';
+import {CustomLocalStorage} from './../../JavaScript/Modules/CustomLocalStorageService.js';
+import {USER_DETAILS} from './../../JavaScript/BAL/Constants.js';
 import './LoginPageStyles.css';
 
 const Login_Page = (params) => {
@@ -104,11 +106,25 @@ const Login_Page = (params) => {
     }
   };
 
-  const onInsertSuccess = (params) => {
+  const onInsertSuccess = async (params) => {
     try {
-      alert('Logged in successfully');
-      if(onLoginProcessCompleted !== null && onLoginProcessCompleted !== undefined){
-        onLoginProcessCompleted();
+      let postData = {
+        user_email: '',
+        user_password: '',
+      };
+      loginData.loginCredentials.forEach((item) => {
+        postData[item.key] = item.value;
+      });
+      
+      let isSuccessful = await CustomLocalStorage.SaveData(USER_DETAILS,postData);
+      if(isSuccessful){
+        alert('Logged in successfully');
+        if(onLoginProcessCompleted !== null && onLoginProcessCompleted !== undefined){
+          onLoginProcessCompleted();
+        }
+      }
+      else{
+        onInsertFailure();
       }
       setLoginData({
         ...loginData,
