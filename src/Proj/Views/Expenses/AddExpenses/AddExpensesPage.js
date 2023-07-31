@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   CustomLogger,
   DateTimeManipulations,
@@ -8,6 +8,8 @@ import { PaymentTypes, ExpenditureTypes } from './../ExpenseTypeConstants.js';
 import { ADD_EXPENSE_DATA } from './../../../JavaScript/BAL/Services/TempData.js';
 import { ExpensesService } from './../../../JavaScript/BAL/Services/ViewExpensesSAL.js';
 import './AddExpensesPageStyles.css';
+import { CustomLocalStorage } from './../../../JavaScript/Modules/CustomLocalStorageService.js';
+import { USER_DETAILS } from './../../../JavaScript/BAL/Constants.js';
 
 const AddExpenses_Page = (parms) => {
   /*
@@ -128,11 +130,60 @@ const AddExpenses_Page = (parms) => {
   */ const [expensesData, setExpensesData] = useState({
     expenses: defaultExpenseValues,
     isBusy: false,
+    userDetails: null,
+    isValidUser: false,
+
     /*
     isSuccessCallBack: '',
     isFailureCallBack: '',
     */
   });
+
+  useEffect(() => {
+    try {
+      if (expensesData.isValidUser) {
+        getExpenses();
+      } else {
+        doValidateUser();
+      }
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  }, [expensesData.requiredDate, expensesData.isValidUser]);
+
+  const doValidateUser = async (params) => {
+    try {
+      let _isValidUser = false;
+      let userDetailsJSON;
+      const userDetailsString = await CustomLocalStorage.RetriveData(
+        USER_DETAILS
+      );
+      if (
+        userDetailsString !== null &&
+        userDetailsString !== undefined &&
+        userDetailsString !== ''
+      ) {
+        userDetailsJSON = JSON.parse(userDetailsString);
+        if (userDetailsJSON != null && userDetailsJSON !== undefined) {
+          _isValidUser = true;
+        }
+      }
+      if (_isValidUser) {
+        setExpensesData({
+          ...expensesData,
+          userDetails: {
+            user_email: userDetailsJSON.user_email,
+            user_password: userDetailsJSON.user_password,
+          },
+          isValidUser: true,
+        });
+      } else {
+        //history.push('/');
+      }
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
 
   const onTextChanged = (e) => {
     try {
@@ -190,7 +241,8 @@ const AddExpenses_Page = (parms) => {
 
   const onButtonClick = (e) => {
     try {
-      /** /
+      if (expensesData.isValidUser) {
+        /** /
       ExpensesService.addExpenses(
         ADD_EXPENSE_DATA,
         onInsertSuccess,
@@ -198,51 +250,62 @@ const AddExpenses_Page = (parms) => {
       );
       setExpensesData({ ...expensesData, isBusy: true });
       /**/
-      /**/
-      //console.log(expensesData.expenses);
-      let errorText = '';
-      //let isValidToProceed=false;
-      expensesData.expenses.forEach((item) => {
-        if (
-          (item.isMandatory && item.value === null) ||
-          item.value === undefined ||
-          item.value === ''
-        ) {
-          errorText += `${errorText === '' ? '' : ', '}${item.name}`;
-        }
-      });
-      if (errorText !== '') {
-        errorText += ' field(s) are mandatory, please fill a valid value';
-        alert(errorText);
-      } else {
-        let postData = {
-          expense_index: '',
-          expenditureId: '',
-          dateOfPurchase: '',
-          nameOfPurchase: '',
-          expenditureType: '',
-          paidBy: '',
-          amountSpend: '',
-          details: '',
-          dateCreated: '',
-          isSynced: '1',
-          year: '',
-          month: '',
-        };
+        /**/
+        //console.log(expensesData.expenses);
+        let errorText = '';
+        //let isValidToProceed=false;
         expensesData.expenses.forEach((item) => {
-          postData[item.key] = item.value;
+          if (
+            (item.isMandatory && item.value === null) ||
+            item.value === undefined ||
+            item.value === ''
+          ) {
+            errorText += `${errorText === '' ? '' : ', '}${item.name}`;
+          }
         });
-        const _purchaseDate = new Date(postData.dateOfPurchase);
-        if (_purchaseDate !== null && _purchaseDate !== undefined) {
-          postData.month = _purchaseDate.getMonth() + 1;
-          postData.year = _purchaseDate.getFullYear();
-        }
-        postData.dateCreated = new Date();
-        postData.expenditureId = DateTimeManipulations.getTicks();
-        //console.log(JSON.stringify(postData));
-        ExpensesService.addExpenses(postData, onInsertSuccess, onInsertFailure);
-        setExpensesData({ ...expensesData, isBusy: true });
-      } /**/
+        if (errorText !== '') {
+          errorText += ' field(s) are mandatory, please fill a valid value';
+          alert(errorText);
+        } else {
+          let postData = {
+            expense_index: '',
+            expenditureId: '',
+            dateOfPurchase: '',
+            nameOfPurchase: '',
+            expenditureType: '',
+            paidBy: '',
+            amountSpend: '',
+            details: '',
+            dateCreated: '',
+            isSynced: '1',
+            year: '',
+            month: '',
+            user_data: expensesData.userDetails,
+          };
+          expensesData.expenses.forEach((item) => {
+            postData[item.key] = item.value;
+          });
+
+          const _purchaseDate = new Date(postData.dateOfPurchase);
+          if (_purchaseDate !== null && _purchaseDate !== undefined) {
+            postData.month = _purchaseDate.getMonth() + 1;
+            postData.year = _purchaseDate.getFullYear();
+          }
+          postData.dateCreated = new Date();
+          postData.expenditureId = DateTimeManipulations.getTicks();
+          //console.log(JSON.stringify(postData));
+          ExpensesService.addExpenses(
+            postData,
+            onInsertSuccess,
+            onInsertFailure
+          );
+          setExpensesData({ ...expensesData, isBusy: true });
+        } /**/
+      } else {
+        alert(
+          'Invalid user, please go to home page and login with valid credentials'
+        );
+      }
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }

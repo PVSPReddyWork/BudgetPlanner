@@ -28,9 +28,7 @@ const ViewExpenses_Page = (params) => {
 
   useEffect(() => {
     try {
-      if (
-        expensesData.isValidUser
-      ) {
+      if (expensesData.isValidUser) {
         getExpenses();
       } else {
         doValidateUser();
@@ -67,7 +65,7 @@ const ViewExpenses_Page = (params) => {
           isValidUser: true,
         });
       } else {
-        history.push('/');
+        //history.push('/');
       }
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
