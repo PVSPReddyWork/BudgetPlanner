@@ -1,5 +1,5 @@
-///export const proxy = 'http://localhost:3010/proxy/?url=';//
-export const proxy = 'https://freepass.cyclic.app/proxy/?url=';
+export const proxy = 'http://localhost:3010/proxy/?url=';//
+//export const proxy = 'https://freepass.cyclic.app/proxy/?url=';
 
 const googleProductionDeploymentID =
   'AKfycbzs2Cr48wreD1To2qqd9SKtEWgkYPwDfvh11VQZGMt84dixT5gQ17LqPrr4Okhr9Jnh';
@@ -12,7 +12,7 @@ export const mainURL =
   googleProductionDeploymentID +
   '/exec';
 
-export const baseURL = `${baseURL}?Contenttype=application/json&userRequest=`;
+//export const baseURL = `${baseURL}?Contenttype=application/json&userRequest=`;
 
 //https://script.google.com/macros/s/AKfycbxMBuIJPBf6hvtwrOUkVOJTvYH2C7JWIS9yBH4lBu8/dev
 const googleTestDeploymentID =

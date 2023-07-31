@@ -178,7 +178,7 @@ const Login_Page = (params) => {
   };
 
   return (
-    <div className={loginMainHolderClassName} style={...loginStyles}>
+    <div className={loginMainHolderClassName} style={{...loginStyles}}>
       <div>
         {AddFieldsUI()}
         <button onClick={onLoginButtonClick}>Login</button>

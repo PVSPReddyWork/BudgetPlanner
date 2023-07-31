@@ -29,8 +29,7 @@ const ViewExpenses_Page = (params) => {
   useEffect(() => {
     try {
       if (
-        expensesData.userDetails !== null &&
-        expensesData.userDetails !== undefined
+        expensesData.isValidUser
       ) {
         getExpenses();
       } else {
@@ -65,7 +64,7 @@ const ViewExpenses_Page = (params) => {
             user_email: userDetailsJSON.user_email,
             user_password: userDetailsJSON.user_password,
           },
-          isValidUser: false,
+          isValidUser: true,
         });
       } else {
         history.push('/');

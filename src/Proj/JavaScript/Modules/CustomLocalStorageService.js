@@ -1,3 +1,4 @@
+import { CustomLogger } from './Helper';
 export const CustomLocalStorage = {
   SaveData: async (key, value, successCallBack, failureCallBack) => {
     let isSuccessful = false;
