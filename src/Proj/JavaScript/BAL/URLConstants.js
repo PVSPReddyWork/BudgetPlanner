@@ -1,5 +1,5 @@
-export const proxy = 'http://localhost:3010/proxy/?url=';//
-//export const proxy = 'https://freepass.cyclic.app/proxy/?url=';
+//export const proxy = 'http://localhost:3010/proxy/?url=';//
+export const proxy = 'https://freepass.cyclic.app/proxy/?url=';
 
 const googleProductionDeploymentID =
   'AKfycbzs2Cr48wreD1To2qqd9SKtEWgkYPwDfvh11VQZGMt84dixT5gQ17LqPrr4Okhr9Jnh';
