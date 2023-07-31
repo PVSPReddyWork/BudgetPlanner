@@ -85,6 +85,7 @@ export const ExpensesService = {
           isSynced: '1',
           year: expensesRequestParms.year,
           month: expensesRequestParms.month,
+          user_data: expensesRequestParms.user_data,
         },
       };
       const response = await PostDatabyProxy(url, postDataReqObj);

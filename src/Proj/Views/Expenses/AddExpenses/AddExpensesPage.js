@@ -142,7 +142,6 @@ const AddExpenses_Page = (parms) => {
   useEffect(() => {
     try {
       if (expensesData.isValidUser) {
-        getExpenses();
       } else {
         doValidateUser();
       }
