@@ -8,8 +8,12 @@ import {
   ViewExpensesService,
 } from './../../../JavaScript/BAL/Services/ViewExpensesSAL.js';
 import './ViewExpensePageStyles.css';
+import { CustomLocalStorage } from './../../../JavaScript/Modules/CustomLocalStorageService.js';
+import { USER_DETAILS } from './../../../JavaScript/BAL/Constants.js';
 
-const ViewExpenses_Page = (parms) => {
+const ViewExpenses_Page = (params) => {
+  const { history } = params;
+
   const [expensesData, setExpensesData] = useState({
     expenses: [],
     totalExpense: 0,
@@ -18,9 +22,60 @@ const ViewExpenses_Page = (parms) => {
         ? '0' + DateTimeManipulations.getMonth(false).toString()
         : DateTimeManipulations.getMonth(false).toString()
     }`,
+    userDetails: null,
+    isValidUser: false,
   });
 
   useEffect(() => {
+    try {
+      if (
+        expensesData.userDetails !== null &&
+        expensesData.userDetails !== undefined
+      ) {
+        getExpenses();
+      } else {
+        doValidateUser();
+      }
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  }, [expensesData.requiredDate, expensesData.isValidUser]);
+
+  const doValidateUser = async (params) => {
+    try {
+      let _isValidUser = false;
+      let userDetailsJSON;
+      const userDetailsString = await CustomLocalStorage.RetriveData(
+        USER_DETAILS
+      );
+      if (
+        userDetailsString !== null &&
+        userDetailsString !== undefined &&
+        userDetailsString !== ''
+      ) {
+        userDetailsJSON = JSON.parse(userDetailsString);
+        if (userDetailsJSON != null && userDetailsJSON !== undefined) {
+          _isValidUser = true;
+        }
+      }
+      if (_isValidUser) {
+        setExpensesData({
+          ...expensesData,
+          userDetails: {
+            user_email: userDetailsJSON.user_email,
+            user_password: userDetailsJSON.user_password,
+          },
+          isValidUser: false,
+        });
+      } else {
+        history.push('/');
+      }
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
+  const getExpenses = async (params) => {
     try {
       const selectedDate = expensesData.requiredDate;
       let selectedYear = selectedDate.split('-')[0];
@@ -35,19 +90,15 @@ const ViewExpenses_Page = (parms) => {
           month: DateTimeManipulations.getMonthByNumber(
             selectedMonth.toString()
           ),
+          user_data: expensesData.userDetails,
         };
-        getExpenses(timeObj);
+        //getExpenses(timeObj);
+        ExpensesService.getExpenses(timeObj, onGetExpenses);
       } else {
         alert('Date Error');
       }
-    } catch (ex) {
-      CustomLogger.ErrorLogger(ex);
-    }
-  }, [expensesData.requiredDate]);
 
-  const getExpenses = (params) => {
-    try {
-      ExpensesService.getExpenses(params, onGetExpenses);
+      //ExpensesService.getExpenses(params, onGetExpenses);
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
@@ -220,30 +271,41 @@ const ViewExpenses_Page = (parms) => {
   };
 
   return (
-    <div>
-      {setDateModule()}
-      <div className="expense_item_row">
-        <div className="expense_total_text">
-          <p className="expense_item_text">Total Amount: </p>
+    <>
+      {expensesData.isValidUser ? (
+        <div>
+          {setDateModule()}
+          <div className="expense_item_row">
+            <div className="expense_total_text">
+              <p className="expense_item_text">Total Amount: </p>
+            </div>
+            <div className="expense_total_value">
+              <p className="expense_item_text">{expensesData.totalExpense}</p>
+            </div>
+          </div>
+          {fillExpenseDataHelper({
+            index: 'S.No',
+            dateOfPurchase: 'Purchase Date',
+            nameOfPurchase: 'Name',
+            expenditureType: 'Type',
+            paidBy: 'Paid Via',
+            amountSpend: 'Amount',
+            details: 'Details',
+            dateCreated: 'Added On',
+            expenditureId: '',
+            isSynced: '',
+          })}
+          {fillExpenseData()}
         </div>
-        <div className="expense_total_value">
-          <p className="expense_item_text">{expensesData.totalExpense}</p>
-        </div>
-      </div>
-      {fillExpenseDataHelper({
-        index: 'S.No',
-        dateOfPurchase: 'Purchase Date',
-        nameOfPurchase: 'Name',
-        expenditureType: 'Type',
-        paidBy: 'Paid Via',
-        amountSpend: 'Amount',
-        details: 'Details',
-        dateCreated: 'Added On',
-        expenditureId: '',
-        isSynced: '',
-      })}
-      {fillExpenseData()}
-    </div>
+      ) : (
+        <>
+          <div>
+            Invalid user, please go to home page and login with valid
+            credentials
+          </div>
+        </>
+      )}
+    </>
   );
 };
 

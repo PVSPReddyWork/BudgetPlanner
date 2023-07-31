@@ -27,6 +27,7 @@ export const ExpensesService = {
         service_request_data: {
           month: params.month,
           year: params.year,
+          user_data: params.user_data,
         },
       };
       /*

@@ -1,6 +1,6 @@
 export const CustomLocalStorage = {
   SaveData: async (key, value, successCallBack, failureCallBack) => {
-    isSuccessful = false;
+    let isSuccessful = false;
     try {
       var stringValue = JSON.stringify(value);
       localStorage.setItem(key, stringValue);
@@ -26,7 +26,7 @@ export const CustomLocalStorage = {
     return retrunData;
   },
   removeData: async (key, successCallBack, failureCallBack) => {
-    isSuccessful = false;
+    let isSuccessful = false;
     try {
       localStorage.removeItem(key);
       isSuccessful = true;
@@ -39,7 +39,7 @@ export const CustomLocalStorage = {
     return isSuccessful;
   },
   clearAllData: async (key, successCallBack, failureCallBack) => {
-    isSuccessful = false;
+    let isSuccessful = false;
     try {
       localStorage.clear();
       isSuccessful = true;
