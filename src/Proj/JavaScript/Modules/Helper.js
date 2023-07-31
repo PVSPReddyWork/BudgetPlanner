@@ -6,9 +6,9 @@ Client error responses (400 – 499)
 Server error responses (500 – 599)
 */
 
-export const CodeSuccess= 200;
-export const CodeClientError= 400;
-export const CodeServerError= 500;
+export const CodeSuccess = 200;
+export const CodeClientError = 400;
+export const CodeServerError = 500;
 export const CreateResponseObject = {
   createResponseObject: async (statusCode = 0, responseData, message = '') => {
     let responseObject;
@@ -64,9 +64,7 @@ export const CustomLogger = {
   },
 };
 
-
-  
-export const MonthsObject= [
+export const MonthsObject = [
   {
     id: 1,
     name: 'January',
@@ -140,16 +138,32 @@ export const MonthsObject= [
     monthNumber: '12',
   },
 ];
+var defaultDate = new Date();
 export const DateTimeManipulations = {
-  getDay: function (date = new Date()) {
+  getDay: function (date = defaultDate) {
     const currentDayDate = date.getDate();
     return currentDayDate;
   },
-  getMonth: function (date = new Date()) {
+  getMonth: function (isRequiredInName = true, date = defaultDate) {
     const currentMonthNumber = date.getMonth() + 1;
+    if (isRequiredInName) {
+      let currentMonthObject = {};
+      MonthsObject.forEach((monthItem) => {
+        if (currentMonthNumber.toString() === monthItem.id.toString()) {
+          currentMonthObject = monthItem;
+        }
+      });
+      return currentMonthObject?.name;
+    } else {
+      return currentMonthNumber;
+    }
+    // return currentMonthObject?.code;
+    // return currentMonthObject?.monthNumber;
+  },
+  getMonthByNumber: function (monthNumber) {
     let currentMonthObject = {};
     MonthsObject.forEach((monthItem) => {
-      if (currentMonthNumber.toString() === monthItem.id.toString()) {
+      if (monthNumber.toString() === monthItem.id.toString()) {
         currentMonthObject = monthItem;
       }
     });
