@@ -27,6 +27,7 @@ export const ExpensesService = {
         service_request_data: {
           month: params.month,
           year: params.year,
+          user_data: params.user_data,
         },
       };
       /*
@@ -84,6 +85,7 @@ export const ExpensesService = {
           isSynced: '1',
           year: expensesRequestParms.year,
           month: expensesRequestParms.month,
+          user_data: expensesRequestParms.user_data,
         },
       };
       const response = await PostDatabyProxy(url, postDataReqObj);
