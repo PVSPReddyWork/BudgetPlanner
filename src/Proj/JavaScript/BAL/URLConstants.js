@@ -1,8 +1,11 @@
 //export const proxy = 'http://localhost:3010/proxy/?url=';//
+//export const proxy = '';//
 export const proxy = 'https://freepass.cyclic.app/proxy/?url=';
 
 const googleProductionDeploymentID =
-  'AKfycbzs2Cr48wreD1To2qqd9SKtEWgkYPwDfvh11VQZGMt84dixT5gQ17LqPrr4Okhr9Jnh';
+  'AKfycbwwdZhD_qu85IuhFQnM6bhI-t04jXvjTnq6NeO0kRLMVQWIfSf5OyO2nDuu5A23SbDq';
+//'AKfycbzn1Si7olEcLwTo-WlWcLcsezDNxJXxCJnCU6VDXirBGvrI_BhjctwURm0E6jVVDzvW';
+//'AKfycbzs2Cr48wreD1To2qqd9SKtEWgkYPwDfvh11VQZGMt84dixT5gQ17LqPrr4Okhr9Jnh';
 //'AKfycbzB8K1NqyYFbW-LZv5YBXS3SdKpAvO1xo5qx6HVfRvkneI0-1kVSSJtN2WFREdo9k47';
 //'AKfycbzFNvk34-PYMHm-ZMnpxOvNvwfPnMJQlu_-UvbyAdbc5IdQTDPDPWALLZto0gaLc3nq';
 //'AKfycby0bNrwB4PG2DzmbhFIg6oNE3VHYnWMmY7ZOwMw7-HQXPcnJYTDor1IqaB0YIb-oltM';
