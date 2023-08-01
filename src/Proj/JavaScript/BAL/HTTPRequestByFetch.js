@@ -95,8 +95,9 @@ export const PostData = async (
     //console.log(JSON.stringify(reqbody));
     const response = await fetch(`${proxy}${url}`, {
       method: 'POST',
-      body: JSON.stringify(reqbody) /***/,
+      body: JSON.stringify(postDataReqObj) /***/,
       headers: {
+        ...GENERAL_HEADERS,
         //'Content-Type': 'application/json'
       } /**/,
     }); /*

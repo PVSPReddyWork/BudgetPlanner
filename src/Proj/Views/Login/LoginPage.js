@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { CustomLogger } from './../../JavaScript/Modules/Helper.js';
 
 import { LoginService } from './../../JavaScript/BAL/Services/LoginService.js';
-import {CustomLocalStorage} from './../../JavaScript/Modules/CustomLocalStorageService.js';
-import {USER_DETAILS} from './../../JavaScript/BAL/Constants.js';
+import { CustomLocalStorage } from './../../JavaScript/Modules/CustomLocalStorageService.js';
+import { USER_DETAILS } from './../../JavaScript/BAL/Constants.js';
 import './LoginPageStyles.css';
 
 const Login_Page = (params) => {
-  const { loginStyles, loginClassName, onLoginClicked, onLoginProcessCompleted } = params;
+  const {
+    loginStyles,
+    loginClassName,
+    onLoginClicked,
+    onLoginProcessCompleted,
+  } = params;
 
   const loginMainHolderClassName = `addLoginHolder ${
     loginClassName !== null && loginClassName !== undefined
@@ -115,15 +120,20 @@ const Login_Page = (params) => {
       loginData.loginCredentials.forEach((item) => {
         postData[item.key] = item.value;
       });
-      
-      let isSuccessful = await CustomLocalStorage.SaveData(USER_DETAILS,postData);
-      if(isSuccessful){
+
+      let isSuccessful = await CustomLocalStorage.SaveData(
+        USER_DETAILS,
+        postData
+      );
+      if (isSuccessful) {
         alert('Logged in successfully');
-        if(onLoginProcessCompleted !== null && onLoginProcessCompleted !== undefined){
+        if (
+          onLoginProcessCompleted !== null &&
+          onLoginProcessCompleted !== undefined
+        ) {
           onLoginProcessCompleted();
         }
-      }
-      else{
+      } else {
         onInsertFailure();
       }
       setLoginData({
@@ -178,7 +188,7 @@ const Login_Page = (params) => {
   };
 
   return (
-    <div className={loginMainHolderClassName} style={{...loginStyles}}>
+    <div className={loginMainHolderClassName} style={{ ...loginStyles }}>
       <div>
         {AddFieldsUI()}
         <button onClick={onLoginButtonClick}>Login</button>
