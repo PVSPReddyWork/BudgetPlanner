@@ -128,14 +128,14 @@ const ViewExpenses_Page = (params) => {
             _totalExpense += parseFloat(item.amountSpend);
           }
         });
-        /*
+
         _expenseData.sort(function (a, b) {
           // Turn your strings into dates, and then subtract them
           // to get a value that is either negative, positive, or zero.
-          // return new Date(b.dateOfPurchase) - new Date(a.dateOfPurchase);
-          return new Date(a.dateOfPurchase) - new Date(b.dateOfPurchase);
+          return new Date(b.dateOfPurchase) - new Date(a.dateOfPurchase);
+          //return new Date(a.dateOfPurchase) - new Date(b.dateOfPurchase);
         });
-        */
+
         setExpensesData({
           ...expensesData,
           expenses: _expenseData,
