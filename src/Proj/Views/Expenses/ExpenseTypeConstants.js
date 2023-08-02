@@ -16,8 +16,12 @@ export const PaymentTypes = [
     value: 'GPay',
   },
   {
-    displayText: 'Phone Pay',
-    value: 'Phone Pay',
+    displayText: 'PhonePay',
+    value: 'PhonePay',
+  },
+  {
+    displayText: 'Cred',
+    value: 'Cred',
   },
   {
     displayText: 'PAYTM',
