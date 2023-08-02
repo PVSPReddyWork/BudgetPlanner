@@ -1,6 +1,16 @@
 import React from 'react';
+import LineChart from './../../JavaScript/Modules/GraphMaker/LineChart.js';
 
 const showChart_page = () => {
+  const xData = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  const yData = [12, 19, 3, 5, 2, 3];
+  return (
+    <div>
+      <h1>My Line Chart App</h1>
+      <LineChart xData={xData} yData={yData} />
+    </div>
+  );
+
   // Sample data for the chart
   const data = [
     { label: 'Jan', value: 12 },
