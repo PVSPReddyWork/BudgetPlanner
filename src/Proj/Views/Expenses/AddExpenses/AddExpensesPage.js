@@ -37,6 +37,14 @@ const AddExpenses_Page = (parms) => {
   ExpenditureTypes.forEach((element) => {
     expenditureTypePickerValues.push(element.displayText);
   });
+  /*
+  const getMaxDateString = async () => {
+    try {
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+  */
   const defaultExpenseValues = [
     {
       key: NAME_OF_PURCHASE,
@@ -82,7 +90,7 @@ const AddExpenses_Page = (parms) => {
       legendTitle: 'Date of Purchase',
       hintText: '',
       isError: false,
-      value: '2023-07-26T18:39',
+      value: '',
       isDatePicker: true,
       isMandatory: true,
     },
