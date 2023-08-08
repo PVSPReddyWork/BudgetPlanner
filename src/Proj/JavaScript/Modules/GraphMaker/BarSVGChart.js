@@ -1,7 +1,7 @@
 import React from 'react';
 import './ChartStyles.css';
 
-const BarChart = (params) => {
+const BarSVGChart = (params) => {
   const { xData, yData } = params;
   // Sample data for the chart
   const data = [
@@ -99,4 +99,4 @@ const BarChart = (params) => {
   );
 };
 
-export default BarChart;
+export default BarSVGChart;

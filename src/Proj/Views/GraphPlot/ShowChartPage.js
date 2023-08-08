@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LineChart from './../../JavaScript/Modules/GraphMaker/LineChart.js';
 import BarChart from './../../JavaScript/Modules/GraphMaker/BarChart.js';
+import BarSVGChart from './../../JavaScript/Modules/GraphMaker/BarSVGChart.js';
 import {
   CustomLogger,
   DateTimeManipulations,
@@ -216,7 +217,7 @@ const showChart_page = () => {
         <div>
           <h1>My Line Chart App</h1>
           {/* <LineChart xData={xData} yData={yData} /> */}
-          <BarChart
+          <BarSVGChart
             xData={expensesData.xValues}
             yData={expensesData.yValues}
             plotValues={expensesData.displayData}

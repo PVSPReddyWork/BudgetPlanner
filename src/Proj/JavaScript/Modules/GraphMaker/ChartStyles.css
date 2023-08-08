@@ -1,0 +1,9 @@
+.mainHolder {
+  position: relative;
+  width: 50%;
+  height: 50%;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+  border-color: green;
+  margin: 10px;
+}
