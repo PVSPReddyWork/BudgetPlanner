@@ -43,6 +43,14 @@ const showChart_page = () => {
 
   useEffect(() => {
     try {
+      obtainGraphValues();
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  }, [expensesData.expenses]);
+
+  const obtainGraphValues = async () => {
+    try {
       const arrayUniqueByKey1 = [
         ...new Map(
           expensesData.expenses.map((item) => [item['expenditureType'], item])
@@ -73,10 +81,22 @@ const showChart_page = () => {
           }
         });
       });
+      let _xValues = [];
+      let _yValues = [];
+      dataObjects.forEach((item) => {
+        _xValues.push(item.type);
+        _yValues.push(item.value);
+      });
+
+      setExpensesData({
+        ...expensesData,
+        xValues: _xValues,
+        yValues: _yValues,
+      });
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
-  }, [expensesData.expenses]);
+  };
 
   const doValidateUser = async (params) => {
     try {
