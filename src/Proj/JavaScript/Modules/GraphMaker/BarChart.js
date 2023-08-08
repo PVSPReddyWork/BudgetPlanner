@@ -1,6 +1,7 @@
 import React from 'react';
 
-const BarChart = () => {
+const BarChart = (params) => {
+  const { xData, yData } = params;
   // Sample data for the chart
   const data = [
     { label: 'Jan', value: 12 },

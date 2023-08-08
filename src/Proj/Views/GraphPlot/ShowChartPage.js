@@ -217,8 +217,8 @@ const showChart_page = () => {
           <h1>My Line Chart App</h1>
           {/* <LineChart xData={xData} yData={yData} /> */}
           <BarChart
-            xData={expensesData.xData}
-            yData={expensesData.yData}
+            xData={expensesData.xValues}
+            yData={expensesData.yValues}
             plotValues={expensesData.displayData}
           />
         </div>
