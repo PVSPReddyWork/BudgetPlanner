@@ -56,6 +56,23 @@ const showChart_page = () => {
       console.log(arrayUniqueByKey1);
 
       console.log(arrayUniqueByKey2);
+
+      let dataObjects = [];
+      arrayUniqueByKey2.forEach((item) => {
+        let eachDataObj = {
+          type: item,
+          value: 0,
+        };
+        dataObjects.push(eachDataObj);
+      });
+
+      expensesData.expenses.forEach((item) => {
+        dataObjects.forEach((_item) => {
+          if (_item.type === item.expenditureType) {
+            _item.value += parseInt(item.amountSpend);
+          }
+        });
+      });
     } catch (ex) {
       CustomLogger.ErrorLogger(ex);
     }
