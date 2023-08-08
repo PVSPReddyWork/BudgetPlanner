@@ -67,9 +67,9 @@ const Layout = () => {
           <Link to="/add_expense" className="headerLink">
             <div className="menuOptions">Add Expense</div>
           </Link>
-          <Link to="/show_chart" className="headerLink">
+          {/* <Link to="/show_chart" className="headerLink">
             <div className="menuOptions">Graph Plot</div>
-          </Link>
+          </Link> */}
           {/* <Link to="/boardlogin" className="headerLink">
             <div className="menuOptions">Select Board</div>
           </Link>

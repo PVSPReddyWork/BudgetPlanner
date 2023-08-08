@@ -14,7 +14,7 @@ const BarChart = (params) => {
 
   // Function to calculate the maximum value from the data array
   const getMaxValue = () => {
-    return Math.max(...data.map((item) => item.value));
+    return Math.max(...yData.map((item) => item));
   };
 
   // Function to calculate the Y-axis coordinate for each data point
@@ -85,8 +85,8 @@ const BarChart = (params) => {
           color: '#666',
         }}
       >
-        {data.map((item, index) => (
-          <div key={index}>{item.label}</div>
+        {xData.map((item, index) => (
+          <div key={index}>{item}</div>
         ))}
       </div>
     </div>
