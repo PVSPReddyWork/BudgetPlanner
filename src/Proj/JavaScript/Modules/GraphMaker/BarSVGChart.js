@@ -3,99 +3,29 @@ import './ChartStyles.css';
 
 const BarSVGChart = (params) => {
   const { xData, yData } = params;
-  // Sample data for the chart
-  const data = [
-    { label: 'Jan', value: 12 },
-    { label: 'Feb', value: 19 },
-    { label: 'Mar', value: 3 },
-    { label: 'Apr', value: 5 },
-    { label: 'May', value: 2 },
-    { label: 'Jun', value: 3 },
-  ];
-
-  // Function to calculate the maximum value from the data array
-  const getMaxValue = () => {
-    return Math.max(...yData.map((item) => item));
-  };
-
-  // Function to calculate the Y-axis coordinate for each data point
-  const getYCoordinate = (value, maxValue, height) => {
-    return height - (value / maxValue) * height;
-  };
-
-  // Calculate the maximum value and height of the chart container
-  const maxValue = getMaxValue();
-  const chartHeight = 200;
 
   return (
     <>
-      <div className="mainHolder"></div>
+      <div className="mainHolder">
+        <svg height="200px" width="200px" viewBox="0,0,100,100">
+          <g>
+            <line x1="0" y1="0" x2="0" y2="80" className="chartAxis" />
+            <line x1="0" y1="80" x2="80" y2="80" className="chartAxis" />
+          </g>
+          <g>
+            {xData.map((item, index) => {
+              var spaceRatio = 80 / xData.length;
+              let xIndex = spaceRatio * index;
+              return (
+                <text x={xIndex} y={100} fill="red" transform="scale(20)">
+                  {item}
+                </text>
+              );
+            })}
+          </g>
+        </svg>
+      </div>
     </>
-  );
-  return (
-    <div style={{ width: '50%', height: '300px', border: '1px solid #ccc' }}>
-      {/* Y-axis labels */}
-      <div
-        style={{
-          position: 'relative',
-          height: '100%',
-          borderRight: '1px solid #ccc',
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '0',
-            right: '5px',
-            color: '#666',
-          }}
-        >
-          {maxValue}
-        </div>
-        <div
-          style={{
-            position: 'absolute',
-            bottom: `${chartHeight / 2}px`,
-            right: '5px',
-            color: '#666',
-          }}
-        >
-          {maxValue / 2}
-        </div>
-      </div>
-
-      {/* Chart */}
-      <div style={{ position: 'relative', height: chartHeight }}>
-        {data.map((item, index) => (
-          <div
-            key={index}
-            style={{
-              position: 'absolute',
-              bottom: '0',
-              left: `${(100 / (data.length - 1)) * index}%`,
-              width: `${100 / (data.length - 1)}%`,
-              height: `${(item.value / maxValue) * chartHeight}px`,
-              backgroundColor: '#007bff',
-            }}
-          />
-        ))}
-      </div>
-
-      {/* X-axis labels */}
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-          padding: '0 10px',
-          color: '#666',
-        }}
-      >
-        {xData.map((item, index) => (
-          <div key={index}>{item}</div>
-        ))}
-      </div>
-    </div>
   );
 };
 
