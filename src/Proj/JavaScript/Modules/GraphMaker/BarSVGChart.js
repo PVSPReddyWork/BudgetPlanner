@@ -17,7 +17,12 @@ const BarSVGChart = (params) => {
               var spaceRatio = 80 / xData.length;
               let xIndex = spaceRatio * index;
               return (
-                <text x={xIndex} y={100} fill="red" transform="scale(20)">
+                <text
+                  x={xIndex}
+                  y={100}
+                  fill="red"
+                  transform={`rotate(${30} ${xIndex},${100}) scale(${0.3})`}
+                >
                   {item}
                 </text>
               );
