@@ -18,10 +18,26 @@ const BarSVGChart = (params) => {
               let xIndex = spaceRatio * index;
               return (
                 <text
-                  x={xIndex}
-                  y={100}
+                  x={0}
+                  y={0}
                   fill="red"
-                  transform={`rotate(${30} ${xIndex},${100}) scale(${0.3})`}
+                  transform={`translate(${xIndex},${90}) rotate(${30} ${0},${0}) scale(${0.3})`}
+                >
+                  {item}
+                </text>
+              );
+            })}
+          </g>
+          <g>
+            {yData.map((item, index) => {
+              var spaceRatio = 80 / yData.length;
+              let yIndex = spaceRatio * index;
+              return (
+                <text
+                  x={0}
+                  y={0}
+                  fill="red"
+                  transform={`translate(${0},${yIndex}) rotate(${30} ${0},${0}) scale(${0.3})`}
                 >
                   {item}
                 </text>
