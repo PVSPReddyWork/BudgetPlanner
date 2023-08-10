@@ -35,6 +35,10 @@ const BarSVGChart = (params) => {
           <g>
             {xData.map((item, index) => {
               let xIndex = 20 + xSpaceRatio * (index + 1);
+              var multiText = null;
+              if (item.includes(' ')) {
+                multiText = item.split(' ');
+              }
               return (
                 <text
                   x={0}
@@ -43,7 +47,21 @@ const BarSVGChart = (params) => {
                   text-anchor="end"
                   transform={`translate(${xIndex},${84}) rotate(${320} ${0},${0}) scale(${0.3})`}
                 >
-                  {item}
+                  {multiText !== null && multiText !== undefined
+                    ? multiText.map((multiTextItem, multiTextIndex) => {
+                        return (
+                          <tspan
+                            x={0}
+                            y={0}
+                            transform={`translate(${
+                              xIndex + multiTextIndex * 10
+                            },${84}) rotate(${320} ${0},${0}) scale(${0.3})`}
+                          >
+                            {multiTextItem}
+                          </tspan>
+                        );
+                      })
+                    : item}
                 </text>
               );
             })}
