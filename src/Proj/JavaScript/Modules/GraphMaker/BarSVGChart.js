@@ -85,6 +85,7 @@ const BarSVGChart = (params) => {
               );
             })}
           </g>
+          <g>{yData.map((item, index) => {})}</g>
         </svg>
       </div>
     </>
