@@ -2,11 +2,16 @@ import React from 'react';
 import './ChartStyles.css';
 
 const BarSVGChart = (params) => {
-  const { xData, yData } = params;
+  const { x_Data, y_Data } = params;
+
+  const xData = ['Street Food', 'Fun and Entertainment', 'Recharge', 'Rent'];
+  const yData = ['23453', '34234.34', '23424.22', '1221.21'];
 
   const xSpaceRatio = 80 / (xData.length + 1);
 
   const ySpaceRatio = 80 / (yData.length + 1);
+
+  const textSizeScale = 0.3;
 
   return (
     <>
@@ -25,7 +30,7 @@ const BarSVGChart = (params) => {
                   y={0}
                   fill="red"
                   text-anchor="end"
-                  transform={`translate(${20},${yIndex}) rotate(${-30} ${0},${0}) scale(${0.3})`}
+                  transform={`translate(${20},${yIndex}) rotate(${-30} ${0},${0}) scale(${textSizeScale})`}
                 >
                   {item}
                 </text>
@@ -34,10 +39,21 @@ const BarSVGChart = (params) => {
           </g>
           <g>
             {xData.map((item, index) => {
-              let xIndex = 20 + xSpaceRatio * (index + 1);
               var multiText = null;
               if (item.includes(' ')) {
                 multiText = item.split(' ');
+              }
+
+              let xIndex = xSpaceRatio * (index + 1);
+
+              if (multiText !== null && multiText !== undefined) {
+                if (multiText.length > 2) {
+                  xIndex = 15 + xIndex;
+                } else {
+                  xIndex = 20 + xIndex;
+                }
+              } else {
+                xIndex = 20 + xIndex;
               }
               return (
                 <text
@@ -45,17 +61,20 @@ const BarSVGChart = (params) => {
                   y={0}
                   fill="red"
                   text-anchor="end"
-                  transform={`translate(${xIndex},${84}) rotate(${320} ${0},${0}) scale(${0.3})`}
+                  transform={`translate(${xIndex},${84}) rotate(${320} ${0},${0}) scale(${textSizeScale})`}
                 >
                   {multiText !== null && multiText !== undefined
                     ? multiText.map((multiTextItem, multiTextIndex) => {
                         return (
                           <tspan
+                            // x={0}
                             x={0}
-                            y={0}
+                            dy={10}
+                            fill="green"
+                            text-anchor="end"
                             transform={`translate(${
                               xIndex + multiTextIndex * 10
-                            },${84}) rotate(${320} ${0},${0}) scale(${0.3})`}
+                            },${84}) rotate(${320} ${0},${0}) scale(${textSizeScale})`}
                           >
                             {multiTextItem}
                           </tspan>
