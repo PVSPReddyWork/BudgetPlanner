@@ -4,24 +4,28 @@ import './ChartStyles.css';
 const BarSVGChart = (params) => {
   const { xData, yData } = params;
 
+  const xSpaceRatio = 80 / (xData.length + 1);
+
+  const ySpaceRatio = 80 / (yData.length + 1);
+
   return (
     <>
       <div className="mainHolder">
         <svg height="200px" width="200px" viewBox="0,0,100,100">
           <g>
-            <line x1="0" y1="0" x2="0" y2="80" className="chartAxis" />
-            <line x1="0" y1="80" x2="80" y2="80" className="chartAxis" />
+            <line x1="20" y1="0" x2="20" y2="81" className="chartAxis" />
+            <line x1="20" y1="80" x2="100" y2="80" className="chartAxis" />
           </g>
           <g>
-            {xData.map((item, index) => {
-              var spaceRatio = 80 / xData.length;
-              let xIndex = spaceRatio * index;
+            {yData.map((item, index) => {
+              let yIndex = ySpaceRatio * (index + 1);
               return (
                 <text
                   x={0}
                   y={0}
                   fill="red"
-                  transform={`translate(${xIndex},${90}) rotate(${30} ${0},${0}) scale(${0.3})`}
+                  text-anchor="end"
+                  transform={`translate(${20},${yIndex}) rotate(${-30} ${0},${0}) scale(${0.3})`}
                 >
                   {item}
                 </text>
@@ -29,15 +33,15 @@ const BarSVGChart = (params) => {
             })}
           </g>
           <g>
-            {yData.map((item, index) => {
-              var spaceRatio = 80 / yData.length;
-              let yIndex = spaceRatio * index;
+            {xData.map((item, index) => {
+              let xIndex = 20 + xSpaceRatio * (index + 1);
               return (
                 <text
                   x={0}
                   y={0}
                   fill="red"
-                  transform={`translate(${0},${yIndex}) rotate(${30} ${0},${0}) scale(${0.3})`}
+                  text-anchor="end"
+                  transform={`translate(${xIndex},${84}) rotate(${320} ${0},${0}) scale(${0.3})`}
                 >
                   {item}
                 </text>
