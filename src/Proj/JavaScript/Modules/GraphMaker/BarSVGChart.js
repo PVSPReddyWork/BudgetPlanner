@@ -16,11 +16,14 @@ const BarSVGChart = (params) => {
   return (
     <>
       <div className="mainHolder">
-        <svg height="200px" width="200px" viewBox="0,0,100,100">
+        <svg height="200px" width="200px" viewBox="0,0,120,120">
+          {/* This is for base lines */}
           <g>
             <line x1="20" y1="0" x2="20" y2="81" className="chartAxis" />
             <line x1="20" y1="80" x2="100" y2="80" className="chartAxis" />
           </g>
+
+          {/* This is for y-axis info */}
           <g>
             {yData.map((item, index) => {
               let yIndex = ySpaceRatio * (index + 1);
@@ -37,6 +40,8 @@ const BarSVGChart = (params) => {
               );
             })}
           </g>
+
+          {/* This is for x-axis info */}
           <g>
             {xData.map((item, index) => {
               var multiText = null;
@@ -85,6 +90,8 @@ const BarSVGChart = (params) => {
               );
             })}
           </g>
+
+          {/* This is for graph data bars */}
           <g>{yData.map((item, index) => {})}</g>
         </svg>
       </div>
