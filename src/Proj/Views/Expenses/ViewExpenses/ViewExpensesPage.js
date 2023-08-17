@@ -135,6 +135,11 @@ const ViewExpenses_Page = (params) => {
           return new Date(b.dateOfPurchase) - new Date(a.dateOfPurchase);
           //return new Date(a.dateOfPurchase) - new Date(b.dateOfPurchase);
         });
+        let modifiedIndex = _expenseData.length;
+        _expenseData.forEach((item) => {
+          item.index = modifiedIndex;
+          modifiedIndex--;
+        });
 
         setExpensesData({
           ...expensesData,

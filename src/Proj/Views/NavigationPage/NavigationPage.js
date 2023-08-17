@@ -12,6 +12,7 @@ import IntroPage from './../Intro/IntroPage';
 import LoginPage from './../Login/LoginPage';
 import ViewExpensePage from './../Expenses/ViewExpenses/ViewExpensesPage';
 import AddExpensePage from './../Expenses/AddExpenses/AddExpensesPage';
+import ShowChartPage from './../GraphPlot/ShowChartPage.js';
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -33,6 +34,7 @@ const CustomNavigation = (parms) => {
           <Route path="login" element={<LoginPage />} />
           <Route path="view_expense" element={<ViewExpensePage />} />
           <Route path="add_expense" element={<AddExpensePage />} />
+          <Route path="show_chart" element={<ShowChartPage />} />
           {/* <Route index element={<IntroPage />} />
           <Route path="login" element={<LoginPage />} /> */}
           {/* <Route path="boardlogin" element={<LoginToBoardPage />} /> */}
@@ -65,6 +67,9 @@ const Layout = () => {
           <Link to="/add_expense" className="headerLink">
             <div className="menuOptions">Add Expense</div>
           </Link>
+          {/* <Link to="/show_chart" className="headerLink">
+            <div className="menuOptions">Graph Plot</div>
+          </Link> */}
           {/* <Link to="/boardlogin" className="headerLink">
             <div className="menuOptions">Select Board</div>
           </Link>
