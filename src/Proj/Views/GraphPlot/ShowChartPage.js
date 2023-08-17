@@ -10,8 +10,10 @@ import {
   ExpensesService,
   ViewExpensesService,
 } from './../../JavaScript/BAL/Services/ViewExpensesSAL.js';
+import { CustomLocalStorage } from './../../JavaScript/Modules/CustomLocalStorageService.js';
+import { USER_DETAILS } from './../../JavaScript/BAL/Constants.js';
 
-const showChart_page = () => {
+const ShowChart_page = () => {
   const [expensesData, setExpensesData] = useState({
     expenses: [],
     totalExpense: 0,
@@ -235,5 +237,5 @@ const showChart_page = () => {
   );
 };
 
-const ShowChartPage = showChart_page;
+const ShowChartPage = ShowChart_page;
 export default ShowChartPage;
