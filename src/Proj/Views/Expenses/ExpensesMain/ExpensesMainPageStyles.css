@@ -1,0 +1,16 @@
+.mainHolderDiv {
+  display: flex;
+  flex-direction: row;
+}
+.leftHolderDiv {
+  background-color: aqua;
+}
+.rightHolderDiv {
+  flex: 1;
+}
+
+@media screen and (min-width: 480px) {
+  .leftHolderDiv {
+    background-color: green;
+  }
+}

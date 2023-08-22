@@ -73,9 +73,13 @@ const ExpensesMain_Page = (params) => {
   return (
     <>
       {expensesData.isValidUser ? (
-        <div>
-          <ViewExpensesPage />
-          <AddExpensesPage />
+        <div className="mainHolderDiv">
+          <div className="leftHolderDiv">
+            <ViewExpensesPage />
+          </div>
+          <div className="rightHolderDiv">
+            <AddExpensesPage />
+          </div>
         </div>
       ) : (
         <>
