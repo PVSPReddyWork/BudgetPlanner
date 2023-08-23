@@ -75,10 +75,15 @@ const ExpensesMain_Page = (params) => {
       {expensesData.isValidUser ? (
         <div className="mainHolderDiv">
           <div className="leftHolderDiv">
-            <ViewExpensesPage />
+            <div className="viewExpenseDataHolder">
+              <ViewExpensesPage />
+            </div>
           </div>
           <div className="rightHolderDiv">
             <AddExpensesPage />
+          </div>
+          <div className="floatingIconsHolder">
+            <label>+</label>
           </div>
         </div>
       ) : (

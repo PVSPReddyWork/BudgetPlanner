@@ -1,9 +1,28 @@
 .mainHolderDiv {
   display: flex;
   flex-direction: row;
+  overflow-y: hidden;
 }
 .leftHolderDiv {
+  display: flex;
+  position: relative;
   background-color: aqua;
+  overflow-y: hidden;
+}
+.viewExpenseDataHolder {
+  /* position: relative; */
+  overflow: scroll;
+}
+.viewExpenseDataHolder::-webkit-scrollbar {
+  display: none;
+}
+.floatingIconsHolder {
+  position: fixed;
+  background-color: yellow;
+  bottom: 0px;
+  right: 0px;
+  min-height: 100px;
+  min-width: 100px;
 }
 .rightHolderDiv {
   flex: 1;
