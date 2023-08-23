@@ -36,6 +36,14 @@ const ExpensesMain_Page = (params) => {
     }
   }, [expensesData.requiredDate, expensesData.isValidUser]);
 
+  const onMainOptionsSelected = async () => {
+    try {
+      alert('Selected options');
+    } catch (ex) {
+      CustomLogger.ErrorLogger(ex);
+    }
+  };
+
   const doValidateUser = async (params) => {
     try {
       let _isValidUser = false;
@@ -83,7 +91,13 @@ const ExpensesMain_Page = (params) => {
             <AddExpensesPage />
           </div>
           <div className="floatingIconsHolder">
-            <label>+</label>
+            <button className="plusIcon" onClick={onMainOptionsSelected}>
+              &#9776;
+            </button>
+            {/* <p className="plusIcon" onPress={onMainOptionsSelected}>
+              &#9776;
+            </p> */}
+            {/* <h1 onpress={onMainOptionsSelected}>&#9776;</h1> */}
           </div>
         </div>
       ) : (
