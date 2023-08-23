@@ -36,7 +36,8 @@ export const ExpensesService = {
       //console.log(JSON.parse(JSON.stringify(params)));
       */
 
-      const response = await PostDatabyProxy(url, postDataReqObj);
+      //const response = await PostDatabyProxy(url, postDataReqObj)
+      const response = await PostDataDemo(url, postDataReqObj);
 
       //return JSON.parse(response);
       /*
