@@ -91,9 +91,31 @@ const ExpensesMain_Page = (params) => {
             <AddExpensesPage />
           </div>
           <div className="floatingIconsHolder">
-            <button className="plusIcon" onClick={onMainOptionsSelected}>
-              &#9776;
-            </button>
+            <div className="floatingIconsRow">
+              <button className="plusIcon" onClick={onMainOptionsSelected}>
+                <span>&#43;</span>
+              </button>
+            </div>
+            <div className="floatingIconsRow">
+              <button className="plusIcon" onClick={onMainOptionsSelected}>
+                <span>&#128202;</span>
+              </button>
+              <button className="plusIcon" onClick={onMainOptionsSelected}>
+                <span>&#9776;</span>
+              </button>
+            </div>
+
+            {/* <div className="floatingIconsRow">
+              <button className="plusIcon" onClick={onMainOptionsSelected}>
+                <span>&#43;</span>
+              </button>
+              <button className="plusIcon" onClick={onMainOptionsSelected}>
+                <span>&#128202;</span>
+              </button>
+              <button className="plusIcon" onClick={onMainOptionsSelected}>
+                <span>&#9776;</span>
+              </button>
+            </div> */}
             {/* <p className="plusIcon" onPress={onMainOptionsSelected}>
               &#9776;
             </p> */}
