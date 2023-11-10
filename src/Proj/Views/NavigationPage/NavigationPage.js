@@ -11,7 +11,7 @@ import './NavigationPageStyles.css';
 import IntroPage from './../Intro/IntroPage';
 import LoginPage from './../Login/LoginPage';
 import ViewExpensePage from './../Expenses/ViewExpenses/ViewExpensesPage';
-import AddExpensePage from './../Expenses/AddExpenses/AddExpensesPage';
+import AddExpenseBulkPage from './../Expenses/AddExpenses/AddExpensesBulkPage';
 import ShowChartPage from './../GraphPlot/ShowChartPage.js';
 
 // This site has 3 pages, all of which are rendered
@@ -33,7 +33,7 @@ const CustomNavigation = (parms) => {
           <Route path="about" element={<About />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="view_expense" element={<ViewExpensePage />} />
-          <Route path="add_expense" element={<AddExpensePage />} />
+          <Route path="add_expense" element={<AddExpenseBulkPage />} />
           <Route path="show_chart" element={<ShowChartPage />} />
           {/* <Route index element={<IntroPage />} />
           <Route path="login" element={<LoginPage />} /> */}
