@@ -3,145 +3,26 @@ import {
   CustomLogger,
   DateTimeManipulations,
 } from './../../../JavaScript/Modules/Helper.js';
-import { PaymentTypes, ExpenditureTypes } from './../ExpenseTypeConstants.js';
+import { EXPENSE_DATA } from './../ExpenseTypeConstants.js';
 
-import { ADD_EXPENSE_DATA } from './../../../JavaScript/BAL/Services/TempData.js';
+import {
+  ADD_EXPENSE_DATA,
+  NAME_OF_PURCHASE,
+  AMOUNT_SPEND,
+  PAID_BY,
+  DATE_OF_PURCHASE,
+  TIME_OF_PURCHASE,
+  EXPENDITURE_TYPE,
+  DETAILS,
+} from './../../../JavaScript/BAL/Services/TempData.js';
 import { ExpensesService } from './../../../JavaScript/BAL/Services/ViewExpensesSAL.js';
 import './AddExpensesPageStyles.css';
 import { CustomLocalStorage } from './../../../JavaScript/Modules/CustomLocalStorageService.js';
 import { USER_DETAILS } from './../../../JavaScript/BAL/Constants.js';
 
 const AddExpensesBulk_Page = (parms) => {
-  /*
-  expense_index: '',
-  expenditureId: '',
-  dateCreated: '',
-  isSynced: '1',
-  year: '',
-  month: '',
-  */
-
-  const NAME_OF_PURCHASE = 'nameOfPurchase';
-  const AMOUNT_SPEND = 'amountSpend';
-  const PAID_BY = 'paidBy';
-  const DATE_OF_PURCHASE = 'dateOfPurchase';
-  const EXPENDITURE_TYPE = 'expenditureType';
-  const DETAILS = 'details';
-
-  const paymentTypePickerValues = [];
-  PaymentTypes.forEach((element) => {
-    paymentTypePickerValues.push(element.displayText);
-  });
-
-  const expenditureTypePickerValues = [];
-  ExpenditureTypes.forEach((element) => {
-    expenditureTypePickerValues.push(element.displayText);
-  });
-  /*
-  const getMaxDateString = async () => {
-    try {
-    } catch (ex) {
-      CustomLogger.ErrorLogger(ex);
-    }
-  };
-  */
-  const defaultExpenseValues = [
-    {
-      tempExpID: '',
-      key: DATE_OF_PURCHASE,
-      inputID: DATE_OF_PURCHASE,
-      name: 'Purchase Date',
-      placeHolder: 'Date of Purchase',
-      legendTitle: 'Date of Purchase',
-      hintText: '',
-      isError: false,
-      value: '',
-      isDatePicker: true,
-      isMandatory: true,
-    },
-    {
-      tempExpID: '',
-      key: NAME_OF_PURCHASE,
-      inputID: NAME_OF_PURCHASE,
-      name: 'Expense Title',
-      placeHolder: 'Enter Name/Title of Expense',
-      legendTitle: 'Enter Name/Title of Expense',
-      hintText: '',
-      isError: false,
-      value: '',
-      isMandatory: true,
-    },
-    {
-      tempExpID: '',
-      key: AMOUNT_SPEND,
-      inputID: AMOUNT_SPEND,
-      name: 'Amount Spend',
-      placeHolder: 'Amount Spend',
-      legendTitle: 'Amount Spend',
-      hintText: '',
-      isError: false,
-      value: '',
-      isNumber: true,
-      isMandatory: true,
-    },
-    {
-      tempExpID: '',
-      key: PAID_BY,
-      inputID: PAID_BY,
-      name: 'Payment Type',
-      placeHolder: 'Payment Type',
-      legendTitle: 'Payment Type',
-      hintText: '',
-      isError: false,
-      value: '',
-      isPicker: true,
-      pickerData: paymentTypePickerValues,
-      isMandatory: true,
-    },
-    {
-      tempExpID: '',
-      key: EXPENDITURE_TYPE,
-      inputID: EXPENDITURE_TYPE,
-      name: 'Expense Type',
-      placeHolder: 'Expenditure Type',
-      legendTitle: 'Expenditure Type',
-      hintText: '',
-      isError: false,
-      value: '',
-      isPicker: true,
-      pickerData: expenditureTypePickerValues,
-      isMandatory: true,
-    },
-    {
-      tempExpID: '',
-      key: DETAILS,
-      inputID: DETAILS,
-      name: 'Details',
-      placeHolder: 'Details',
-      legendTitle: 'Details',
-      hintText: '',
-      isError: false,
-      value: '',
-      isEditor: true,
-      isMandatory: true,
-    },
-  ];
-  /*
-  postData: {
-    expense_index: '',
-    expenditureId: '',
-    dateOfPurchase: '',
-    nameOfPurchase: '',
-    expenditureType: '',
-    paidBy: '',
-    amountSpend: '',
-    details: '',
-    dateCreated: '',
-    isSynced: '1',
-    year: '',
-    month: '',
-  },
-  */ const [expensesData, setExpensesData] = useState({
+  const defaultExpenseValues = EXPENSE_DATA;
+  const [expensesData, setExpensesData] = useState({
     expenses: defaultExpenseValues,
     isBusy: false,
     userDetails: null,
@@ -372,7 +253,7 @@ const AddExpensesBulk_Page = (parms) => {
             <div key={item.key}>
               {/*max="2018-06-14T00:00"*/}
               <input
-                type="datetime-local"
+                type={item.type}
                 max={maxDateString}
                 id={item.inputID}
                 onChange={onDateChanged}
